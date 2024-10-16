@@ -13,18 +13,19 @@ Le code devra permettre :
 ---
 
 ### Fonctionnement du code
-    Le developement de ce code à partir de ce cahier des charges a été fait avec pour commencer une approche de base fonctionnant avec des menus contextuels.
-    Ensuite, une approche avec des commandes directes a été ajoutée pour permettre une utilisation plus fluide du code.
-    Enfin, une persistance des données a été ajoutée pour permettre de sauvegarder les données des vols et des passagers.
+
+Le developement de ce code à partir de ce cahier des charges a été fait avec pour commencer une approche de base fonctionnant avec des menus contextuels.
+Ensuite, une approche avec des commandes directes a été ajoutée pour permettre une utilisation plus fluide du code.
+Enfin, une persistance des données a été ajoutée pour permettre de sauvegarder les données des vols et des passagers.
 
 
 #### Approches de développement
-    - approche de base avec menu contextuel
-    - approche avec commande directe 
+* approche de base avec menu contextuel
+* approche avec commande directe 
 
 #### persistance des données 
-    - approche avec JSON
-    - approche avec SQLite
+* approche avec JSON
+
   
 ---
 
