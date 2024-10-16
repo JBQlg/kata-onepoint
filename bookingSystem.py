@@ -79,10 +79,13 @@ class BookingSystem:
         self.flight_handler.create_flight(plane_id=self.plane_handler.planes[3].id, departure="Paris", destination="Los Angeles", schedule="10:00", date="2021-07-04", reservations=[])
         
         # create some reservations
-        passenger1 = self.reservation_handler.build_passenger("123456789", "John", "Doe", 34)
-        passenge2 = self.reservation_handler.build_passenger("987654321", "Jane", "Doe", 32)
-        seat1= self.reservation_handler.build_seat()
-        
+        # passenger1 = self.reservation_handler.build_passenger("123456789", "John", "Doe", 34)
+        # passenger2 = self.reservation_handler.build_passenger("987654321", "Jane", "Doe", 32)
+        # flight = self.reservation_handler.assign_seat(flight=self.flight_handler.flights[0], passenger=passenger1, seat="C5", list_planes=self.plane_handler.planes)    
+        # flight = self.reservation_handler.assign_seat(flight=self.flight_handler.flights[0], passenger=passenger2, seat="D5", list_planes=self.plane_handler.planes)    
+            
+    
+    
 if __name__ == "__main__":
     booking = BookingSystem()
     

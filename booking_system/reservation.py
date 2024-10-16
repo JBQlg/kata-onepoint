@@ -20,6 +20,8 @@ class Reservation:
         return tmp
         
     def confirm(self) :
+        """This method will confirm the reservation and set the status to CONFIRMED
+        """
         for seat in self.seats:
             seat.is_booked = True
         self.statut = "CONFIRMED"

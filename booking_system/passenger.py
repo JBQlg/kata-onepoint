@@ -9,10 +9,9 @@ class Passenger:
         self.flights = [] # list of flights id the passenger booked
         # # allow to find easly his reservation
         
-
-    def book_flight(self, flight):
-        self.flights.append(flight)
-
+    def book_flight(self, flight_id):
+        self.flights.append(flight_id)
+        
     def get_flights(self):
         return self.flights
 
