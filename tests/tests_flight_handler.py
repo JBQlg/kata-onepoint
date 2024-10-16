@@ -1,7 +1,7 @@
 import unittest
-from ..booking_system.flight_handler import Flight_handler
-from ..booking_system.flight import Flight
-from ..booking_system.seat import Seat
+from booking_system.flight_handler import Flight_handler
+from booking_system.flight import Flight
+from booking_system.seat import Seat
 
 
 class TestFlightHandler(unittest.TestCase):

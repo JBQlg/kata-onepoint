@@ -23,7 +23,7 @@ Enfin, une persistance des données a été ajoutée pour permettre de sauvegard
 * approche de base avec menu contextuel
 * approche avec commande directe 
 
-#### persistance des données 
+#### Persistance des données 
 * approche avec JSON
 
   
