@@ -309,7 +309,7 @@ class Reservation_handler:
     
         for i, passenger in enumerate(resa.passengers):
             current_seat = resa.seats[i]
-            print(f"Passenger: {passenger}, Current seat: {ut.reverse_coordinates_converter(current_seat.col + 1, current_seat.row + 1)}")
+            print(f"Passenger: {passenger}, Current seat: {ut.reverse_coordinates_converter(current_seat.col, current_seat.row)}")
             
             choice = input(f"Do you want to modify the seat for {passenger.firstname} {passenger.lastname}? (y/n) ").strip().lower()
             

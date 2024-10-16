@@ -6,7 +6,7 @@ def coordinates_converter(coord):
     lettre = coord[0]
     row = int(coord[1:]) -1
     col = ord(lettre.upper()) - ord('A')
-    return col+1, row+1
+    return col, row
 
 def reverse_coordinates_converter(col, row):
     """This function converts the standard coordinates (col, row) back to seat coordinates (e.g., C5).
@@ -18,8 +18,8 @@ def reverse_coordinates_converter(col, row):
     Returns:
         coord (str): The seat coordinates in format like 'C5'.
     """
-    col =col -2
-    row = row - 2
+    # col =col - 1
+    # row = row - 1
     lettre = chr(col + ord('A'))  # Convert column number to letter
     seat_number = str(row + 1)  # Convert row number back to 1-indexed seat number
     return lettre + seat_number
