@@ -22,35 +22,71 @@ class Flight:
     def is_seat_available(self, seat):
         # Check if the seat is already booked
         for resa in self.reservations:
-            if resa.seat.row == seat.row and resa.seat.col == seat.col:
-                return False
+            for s in resa.seats:
+                if s.row == seat.row and s.col == seat.col:
+                    return False
         return True
     
     def display_plane_plan(self, plane_list):
-        # Fonction d'affichage du plan de l'avion 
-        # on retrouve l'avion via l'id dans la liste fournie
-        places_format = "      "
+        """ Fonction d'affichage du plan de l'avion pour la réservation avec les couloirs de déplacement.
+        Elle affiche l'état des sièges (occupé ou libre) et représente les couloirs de déplacement.
+        """
+        places_format = "      "  # Préparer la ligne de l'en-tête des colonnes (A, B, C, D, ...)
+        
+        # Recherche de l'avion dans la liste des avions à partir de son id
         for plane in plane_list:
             if plane.id == self.plane_id:
-                #on a trouvé l'avion et ses dimensions 
-                # création d'un header des places (A, B, C, D, E, F)
-                for i in range(plane.col_nb):
-                    places_format += f" {chr(65+i)} "
+                # Avion trouvé, génération du plan de sièges
+                col_nb = plane.col_nb
+                
+                # Déterminer la position du ou des couloirs selon le nombre de colonnes
+                if col_nb > 6:
+                    couloir1_pos = col_nb // 3
+                    couloir2_pos = (col_nb * 2) // 3
+                else:
+                    couloir1_pos = col_nb // 2
+                    couloir2_pos = None  # Pas de second couloir si moins de 6 colonnes
+                
+                # Création de l'en-tête avec les lettres de colonnes (A, B, C...)
+                for i in range(col_nb):
+                    places_format += f" {chr(65 + i)} "
+                    if i == couloir1_pos - 1:
+                        places_format += " | "  # Ajouter le premier couloir
+                    if couloir2_pos and i == couloir2_pos - 1:
+                        places_format += " | "  # Ajouter le second couloir (si applicable)
                 places_format += "\n"
-                # création des places, leur numéro de rangé adapté au header
-                # et leur statut (libre (0) ou occupé (X)) sachant qu'on a la liste de réservation disponible
-                nb_places = plane.row_nb * plane.col_nb
-                # rappel : seat(row, col) colonne 1 = A, colonne 2 = B, colonne 3 = C, colonne 4 = D, colonne 5 = E, colonne 6 = F
-                for i in range(plane.row_nb):
-                    places_format += f"{i+1:2d}    "
-                    for j in range(plane.col_nb):
-                        seat = Seat(i+1, j+1)
+
+                # Parcourir chaque rangée
+                for row in range(plane.row_nb):
+                    places_format += f"{row + 1:2d}    "  # Ajoute le numéro de rangée (1, 2, 3...)
+                    
+                    # Parcourir chaque siège de la rangée
+                    for col in range(col_nb):
+                        seat = Seat(row, col)  # Créer un siège pour cette rangée et colonne
+                        seat_found = False  # Indicateur pour savoir si le siège est réservé
+                        
+                        # Vérifier si ce siège est réservé dans une réservation
                         for resa in self.reservations:
-                            if seat.row == resa.seat.row and seat.col == resa.seat.col:
-                                places_format += " X "
+                            if any(s.row == seat.row and s.col == seat.col for s in resa.seats):
+                                places_format += " X "  # Siège occupé
+                                seat_found = True
                                 break
-                        else:
-                            places_format += " 0 "
+
+                        # Si le siège n'est pas trouvé dans les réservations, il est libre
+                        if not seat_found:
+                            places_format += " 0 "  # Siège libre
+                        
+                        # Ajouter le couloir dans l'affichage après la bonne colonne
+                        if col == couloir1_pos - 1:
+                            places_format += " | "  # Couloir 1
+                        if couloir2_pos and col == couloir2_pos - 1:
+                            places_format += " | "  # Couloir 2
+
                     places_format += "\n"
+                
+                # Afficher le plan complet
                 print(places_format)
+                return
+        print(f"Plane with ID {self.plane_id} not found.")
+
    

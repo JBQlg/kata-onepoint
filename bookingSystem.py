@@ -53,7 +53,7 @@ class BookingSystem:
             elif choix == "2":
                 print(self.flight_handler)
             elif choix == "3":
-                self.reservation_handler.modify_reservation(self.modification_menu(), self.flight_handler.flights, self.plane_handler.planes)
+                self.flight_handler.flights = self.reservation_handler.modify_reservation(self.modification_menu(), self.flight_handler.flights, self.plane_handler.planes)
             elif choix == "4":
                 self.reservation_handler.print_reservation_details(self.flight_handler.flights)
             elif choix == "5":
@@ -78,13 +78,18 @@ class BookingSystem:
         self.flight_handler.create_flight(plane_id=self.plane_handler.planes[2].id, departure="Paris", destination="Tokyo", schedule="15:00", date="2021-07-03", reservations=[])
         self.flight_handler.create_flight(plane_id=self.plane_handler.planes[3].id, departure="Paris", destination="Los Angeles", schedule="10:00", date="2021-07-04", reservations=[])
         
+        # create some reservations
+        passenger1 = self.reservation_handler.build_passenger("123456789", "John", "Doe", 34)
+        passenge2 = self.reservation_handler.build_passenger("987654321", "Jane", "Doe", 32)
+        seat1= self.reservation_handler.build_seat()
+        
 if __name__ == "__main__":
     booking = BookingSystem()
     
     # simulation des items pour tester le système
     print("Simulation des items : " )
     booking.items_simulation()
-    
+
     # lancement du menu principal
     booking.main_menu_handler()
     

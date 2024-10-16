@@ -3,6 +3,10 @@ from booking_system.passenger import Passenger
 from booking_system.seat import Seat
 import booking_system.utils as  ut
 class Reservation_handler:
+    """This class allow ton manage all the reservations options. 
+    It's including the creation, the modification and the cancellation of a reservation.
+    And also the display of the reservation details.
+    """
     
     def __init__(self):
         pass
@@ -11,11 +15,9 @@ class Reservation_handler:
         """ This method allows to create a reservation for a flight.
         It take in argument the current list of flights and the list of planes used.
         And it returns the flights list with the flight updated with the new reservation.
-
         Args:
             flights_list ([Flight]): list of flights
             planes_list ([Plane]): list of plane used
-
         Returns:
             flight_list: the concerned flight is updated with the new reservation
         """
@@ -31,21 +33,41 @@ class Reservation_handler:
                 break
         else:
             print("This flight does not exist")
-            return
+            return flights_list
         # get the passenger
-        passenger = self.create_passenger()
-        # get the seat
-        # display the seats
-        print("Display of available seats : ")
-        f.display_plane_plan(planes_list)
-        seat = self.fill_seat(f)      
+        print("If the reservation is for several passengers please select the number of passengers  \n")
+        nb_passengers = input("Else press 'enter' : ")
+        # check if the number of passengers is a number or empty
+        if nb_passengers.isdigit() == False and nb_passengers != "":
+            raise("Invalid number of passengers, reservation not created")
+        #get plane 
+        if nb_passengers == "":
+            nb_passengers = 1
+        for p in planes_list:
+            if p.id == f.plane_id:
+                plane = p
+                if int(nb_passengers) > plane.row_nb * plane.col_nb:
+                    raise("The number of passengers is too high")
+            
+        passengers = []
+        seat =[]
+        for i in range(int(nb_passengers)):
+            print(f"Passenger {i+1}")
+            passengers.append(self.create_passenger())
+            # get the seat
+            # display the seats
+            print("Display of available seats : ")
+            f.display_plane_plan(planes_list)
+            seat.append(self.fill_seat(f))
+        
         # confirm the reservation
-        reservation = Reservation(f.id, passenger, seat)
+        reservation = Reservation(f.id, passengers, seat)
         print(reservation)
         reservation.confirm()
         if reservation.statut == "CONFIRMED":
             f.reservations.append(reservation)
-            passenger.book_flight
+            for p in passengers:
+                p.book_flight(f.id)
         return flights_list
         
     def create_passenger(self):
@@ -62,6 +84,33 @@ class Reservation_handler:
             return self.create_passenger()
         passenger = Passenger(passport_number, firstname, lastname, age)
         return passenger
+    
+    def build_passenger(self, passport_number, firstname, lastname, age):
+        """This method allows to create a passenger to add to a reservation.
+        It returns the passenger created.
+        """
+        passenger = Passenger(passport_number, firstname, lastname, age)
+        return passenger
+    
+    def assign_seat(self, flight, passenger, seat, list_planes):
+        """This method allows to assign a seat to a reservation.
+        It returns the seat created.
+        """
+        # check if the seat is in the right format
+        if len(seat) != 2:
+            raise ValueError("The seat must be in the format A1")
+        # check if the seat is available
+        if flight.is_seat_available(seat) == True :
+            #check if the seat is in the plane
+            row, col = ut.coordinates_converter(seat)
+            if row > list_planes[flight.plane_id].row_nb or col > list_planes[flight.plane_id].col_nb:
+                raise ValueError("The seat is not in the plane")
+            # check if the seat is available 
+            row, col =ut.coordinates_converter(seat)
+            seat = Seat(col, row)
+            
+        else:
+            raise ValueError("The seat is not available")
     
     def fill_seat(self, flight):
         """This method allows to create a seat for a reservation according to the flight's seats availability.
@@ -112,64 +161,142 @@ class Reservation_handler:
         return None    
     
     def modify_reservation(self, choice_modif, flights_list, planes_list):
-        """This method allow to redirect to the wanted king of modification.
+        """This method allows modifying an existing reservation.
+        The method first identifies the reservation either by the reservation ID or by 
+        the passenger's passport number. Once the reservation is found, the method offers
+        several options: modifying the passenger details, changing the seat, or canceling 
+        the reservation. If there are multiple passengers, the user can choose which passenger 
+        to modify.
+        Args:
+            choice_modif (str): The user's choice of modification (1: modify passenger, 2: modify seat, 3: cancel reservation).
+            flights_list (list): A list of all flights available.
+            planes_list (list): A list of all planes.
+        Raises:
+            ValueError: If the user input is invalid or if the reservation or passenger cannot be found.
         """
         print("\n ------------------")
         print("Modify reservation")
-        print("We need to find the reservation to modify")
-        choice = input("Do you have the reservation id ? (y/n)")
-        # check if the choice is valid
-        while choice not in ["y", "n"]:
-            print("Invalid choice")
-            choice = input("Enter your choice : ")
-        if choice == "y":
-            id_reservation = input("Enter the reservation id : \n")
-            resa=self.get_reservation_by_id_resa(flights_list, id_reservation)
-        elif choice == "n":
-            passport_number = input("Enter the passport number : ")
-            # check if the passport number is in the reservation
-            if ut.is_passport_number_valid(passport_number) == False:
-                print("Invalid passport number")
-                return
-            resa = self.get_reservations_by_passport(flights_list, passport_number)
-            if resa == None:
-                print("Reservation not found")
-                return None
-            else:
-                print(resa)
         
-        match choice_modif:
-            case "1": # modify the passenger
-                self.modify_reservation_passenger(resa)
-            case "2":
-                for f in flights_list:
-                    if f.id == resa.flight_id:
-                        break
-                self.modify_reservation_seat(flight=f, resa=resa, planes_list=planes_list)
-            case "3":
-                self.concel_reservation(resa)
-            case "4":
-                return
+        # Ask user how they want to find the reservation
+        choice = input("Do you have the reservation ID? (y/n): ").strip().lower()
+
+        # Check input (only 'y' or 'n' is allowed)
+        while choice not in ["y", "n"]:
+            print("Invalid choice. Please enter 'y' or 'n'.")
+            choice = input("Do you have the reservation ID? (y/n): ").strip().lower()
+
+        # Search reservation by ID or by passport number
+        if choice == "y":
+            id_reservation = input("Enter the reservation ID: ").strip()
+            resa = self.get_reservation_by_id_resa(flights_list, id_reservation)
+            if not resa:
+                raise ValueError(f"Reservation with ID {id_reservation} not found.")
+        else:
+            passport_number = input("Enter the passenger's passport number: ").strip()
+            # Validate passport number format
+            if not ut.is_passport_number_valid(passport_number):
+                raise ValueError("Invalid passport number format.")
+            
+            resa = self.get_reservations_by_passport(flights_list, passport_number)
+            if not resa:
+                raise ValueError(f"No reservation found for passport number {passport_number}.")
+            else:
+                print(f"Reservation found: {resa}")
+
+        # We have the reservation instance, now we can proceed with the modification
     
-    def modify_reservation_passenger(self, resa):
+        # Select the passenger if there are multiple passengers in the reservation
+        if len(resa.passengers) > 1:
+            print("There are multiple passengers in this reservation.")
+            id_p = input("Enter the passenger's passport number to modify: ").strip()
+            
+            # Find the selected passenger
+            for p in resa.passengers:
+                if p.passport_number == id_p:
+                    selected_passenger = p
+                    break
+            else:
+                # If no match, assume first passenger
+                selected_passenger = resa.passengers[0]
+                print(f"Passenger not found. Modifying the first passenger: {selected_passenger}")
+        else:
+            selected_passenger = resa.passengers[0]  # Only one passenger, select by default
+
+        # Perform the modification based on the reservation and passenger
+        match choice_modif:
+            case "1":  #Modify passenger
+                resa = self.modify_reservation_passenger(resa, selected_passenger.passport_number)
+            case "2":  # Modify the seat for the reservation
+                # Find the flight instance
+                flight = next((f for f in flights_list if f.id == resa.flight_id), None)
+                if not flight:
+                    raise ValueError(f"Flight with ID {resa.flight_id} not found.")
+                resa = self.modify_reservation_seat(flight=flight, resa=resa, planes_list=planes_list)
+            case "3":  # Cancel the reservation
+                self.cancel_reservation(resa)
+            case "4":  # Exit without modifying
+                print("Exiting without modifications.")
+                return flights_list
+            case _:  # Handle invalid input for modification choice
+                raise ValueError("Invalid modification choice.")
+        
+        # Update the reservation in the flight's reservation list
+        for flight in flights_list:
+            if flight.id == resa.flight_id:
+                for i, r in enumerate(flight.reservations):
+                    if r.id == resa.id:
+                        flight.reservations[i] = resa  # Update the modified reservation
+                        break
+
+        return flights_list  # Return the updated flight list
+    
+    def modify_reservation_passenger(self, resa, passport_number):
+        """ This method allows to modify a passenger in a reservation.
+        
+        Args: flight (Flight): the flight where the reservation is made
+        
+        resa (Reservation): the reservation to modify
+        
+        passport_number (str): the unique passport number of the passenger to modify
+        Returns: resa (Reservation): the updated reservation to push in the flight
+        """
         print("Modify the passenger")
-        print(resa.passenger)
-        choice = input("Do you want to modify the passenger ? (y/n) \n")
+        
+        # refind the passenger in the reservation to modify
+        for i, passenger in enumerate(resa.passengers):
+            if passenger.passport_number == passport_number:
+                break
+        if passenger == None:
+            raise ValueError("Passenger not found")
+        print(f"Passenger : {passenger}")
+        
+        choice = input("Are you sure to modify this passenger ? (y/n) \n")
         # check if the choice is valid
         while choice not in ["y", "n"]:
             print("Invalid choice")
-            choice = input("Do you want to modify the passenger ? (y/n) \n")
+            choice = input("Are you sure to modify this passenger ? (y/n) \n")
+            
         if choice == "y":
             # get the new passenger
-            passenger = self.create_passenger()
-            resa.passenger = passenger
+            new_passenger = self.create_passenger()
+            # modify the passenger
+            # passenger = new_passenger
+            resa.passengers[i] = new_passenger
             print("Passenger modified")
-            return
+            return resa
         else:
             print("Passenger not modified")
             return
     
     def modify_reservation_seat(self,flight, resa, planes_list):
+        """This method allows to modify the seat of a reservation.
+
+        Args:
+            flight (Flight): flight concered by the reservation
+            resa (Reservation): reservation to modify
+            planes_list ([Plane]): plane_list to check the seat plan
+        Return : resa (Reservation): the reservation updated
+        """
         print(f"Modify the seat : {ut.reverse_coordinates_converter(resa.seat.col +1, resa.seat.row+1)}")        
         choice = input("Do you want to modify the seat ? (y/n) \n")
         # check if the choice is valid
@@ -184,9 +311,21 @@ class Reservation_handler:
             # get the new seat
             seat = self.fill_seat(flight)
             # free the old seat
-            resa.seat = seat
+            if len(resa.passengers)>1:
+                print("Select the passenger to modify the seat")
+                for p in resa.passengers:
+                    print(p)
+                passport_number = input("Enter the passport number : ")
+                if not ut.is_passport_number_valid(passport_number):
+                    raise ValueError("Invalid passport number format.")
+                for i, p in resa.passengers:
+                    if p.passport_number == passport_number:
+                        break
+                resa.seats[i] = seat
+            else: 
+                resa.seats[0] = seat
             print("Seat modified")
-            return
+            return resa
         else:
             print("Seat not modified")
             return

@@ -6,7 +6,7 @@ class Passenger:
         self.firstname = firstname
         self.lastname = lastname
         self.age = age
-        # self.flights = [] # list of flights id the passenger booked
+        self.flights = [] # list of flights id the passenger booked
         # # allow to find easly his reservation
         
 
