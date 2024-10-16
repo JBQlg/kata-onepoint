@@ -2,7 +2,8 @@ import unittest
 from booking_system.flight_handler import Flight_handler
 from booking_system.flight import Flight
 from booking_system.seat import Seat
-
+from booking_system.reservation import Reservation
+from booking_system.plane import Plane
 
 class TestFlightHandler(unittest.TestCase):
     
@@ -35,3 +36,4 @@ class TestFlightHandler(unittest.TestCase):
         found_flight = self.flight_handler.get_flight(flight.id)
         self.assertEqual(found_flight, flight)
         self.assertIsNone(self.flight_handler.get_flight("INVALID_ID"))
+        
