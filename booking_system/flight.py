@@ -67,7 +67,7 @@ class Flight:
                         
                         # Vérifier si ce siège est réservé dans une réservation
                         for resa in self.reservations:
-                            if any(s.row == seat.row and s.col == seat.col for s in resa.seats):
+                            if any(s.row == seat.row and s.col == seat.col and s.is_booked==True for s in resa.seats ):
                                 places_format += " X "  # Siège occupé
                                 seat_found = True
                                 break

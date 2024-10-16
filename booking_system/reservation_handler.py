@@ -241,7 +241,7 @@ class Reservation_handler:
                     raise ValueError(f"Flight with ID {resa.flight_id} not found.")
                 resa = self.modify_reservation_seat(flight=flight, resa=resa, planes_list=planes_list)
             case "3":  # Cancel the reservation
-                self.cancel_reservation(resa)
+                resa = self.concel_reservation(resa)
             case "4":  # Exit without modifying
                 print("Exiting without modifications.")
                 return flights_list
@@ -322,7 +322,6 @@ class Reservation_handler:
                 # Display available seats
                 print("Display of available seats:")
                 flight.display_plane_plan(planes_list)
-                
                 # Get new seat
                 new_seat = self.fill_seat(flight)
                 # Update the seat for this passenger
@@ -333,50 +332,27 @@ class Reservation_handler:
                 print(f"Seat not modified for {passenger.firstname} {passenger.lastname}")
         
         return resa 
-        # print(f"Modify the seat : {ut.reverse_coordinates_converter(resa.seat.col +1, resa.seat.row+1)}")        
-        # choice = input("Do you want to modify the seat ? (y/n) \n")
-        # # check if the choice is valid
-        # while choice not in ["y", "n"]:
-        #     print("Invalid choice")
-        #     choice = input("Do you want to modify the seat ? (y/n) \n")
-            
-        # # display the seats
-        # print("Display of available seats : ")
-        # print(flight.display_plane_plan(planes_list))
-        # if choice == "y":
-        #     # get the new seat
-        #     seat = self.fill_seat(flight)
-        #     # free the old seat
-        #     if len(resa.passengers)>1:
-        #         print("Select the passenger to modify the seat")
-        #         for p in resa.passengers:
-        #             print(p)
-        #         passport_number = input("Enter the passport number : ")
-        #         if not ut.is_passport_number_valid(passport_number):
-        #             raise ValueError("Invalid passport number format.")
-        #         for i, p in resa.passengers:
-        #             if p.passport_number == passport_number:
-        #                 break
-        #         resa.seats[i] = seat
-        #     else: 
-        #         resa.seats[0] = seat
-        #     print("Seat modified")
-        #     return resa
-        # else:
-        #     print("Seat not modified")
-        #     return
     
     def concel_reservation(self, resa):
-        choice = input("Are you sure you want to cancel the reservation ? (y/n) \n")
+        """This method allows to cancel a seat or a complete reservation.
+
+        Args:
+            resa (Reservation): reservation to modify
+            
+        Returns:
+            resa: the reservation is cancelled
+        """
         # check if the choice is valid
+        choice = input("Are you sure you want to cancel the reservation ? (y/n)\n")
         while choice not in ["y", "n"]:
             print("Invalid choice")
             choice = input("Are you sure you want to cancel the reservation ? (y/n)\n")
         if choice == "y":
             resa.cancel()
-            return
+            print( "Reservation cancelled")
         else :
             print("Reservation not cancelled")
+        return resa        
     
     def print_reservation_details(self, flights):
         print("Print reservation details")
