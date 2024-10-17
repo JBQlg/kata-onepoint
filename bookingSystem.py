@@ -126,7 +126,7 @@ if __name__ == "__main__":
     
     # simulation des items pour tester le système
     print("Simulation des items : " )
-    #booking.items_simulation()
+    booking.items_simulation()
 
     # lancement du menu principal
     booking.main_menu_handler()

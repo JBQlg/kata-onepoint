@@ -185,7 +185,6 @@ class Reservation_handler:
         print("\n ------------------")
         print("Modify reservation")
         
-        # Ask user how they want to find the reservation
         choice = input("Do you have the reservation ID? (y/n): ").strip().lower()
 
         # Check input (only 'y' or 'n' is allowed)
@@ -193,7 +192,7 @@ class Reservation_handler:
             print("Invalid choice. Please enter 'y' or 'n'.")
             choice = input("Do you have the reservation ID? (y/n): ").strip().lower()
 
-        # Search reservation by ID or by passport number
+        # look for reservation by ID or by passport number
         if choice == "y":
             id_reservation = input("Enter the reservation ID: ").strip()
             resa = self.get_reservation_by_id_resa(flights_list, id_reservation)
@@ -201,7 +200,7 @@ class Reservation_handler:
                 raise ValueError(f"Reservation with ID {id_reservation} not found.")
         else:
             passport_number = input("Enter the passenger's passport number: ").strip()
-            # Validate passport number format
+            # check passport number format
             if not ut.is_passport_number_valid(passport_number):
                 raise ValueError("Invalid passport number format.")
             
