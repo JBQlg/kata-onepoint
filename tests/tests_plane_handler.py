@@ -25,15 +25,6 @@ class TestPlaneHandler(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.plane_handler.create_plane(model="Boeing 747", row_nb=10, col_nb=-3)  
 
-    def test_get_planes(self):
-        """Test the retrieval of planes."""
-        plane1 = self.plane_handler.create_plane(model="Boeing 747", row_nb=10, col_nb=6)
-        plane2 = self.plane_handler.create_plane(model="Airbus A320", row_nb=8, col_nb=4)
-        planes = self.plane_handler.get_planes()
-        self.assertEqual(len(planes), 2)
-        self.assertIn(plane1, planes)
-        self.assertIn(plane2, planes)
-
     def test_delete_plane(self):
         """Test deleting a plane"""
         plane = self.plane_handler.create_plane(model="Boeing 747", row_nb=10, col_nb=6)

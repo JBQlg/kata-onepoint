@@ -52,9 +52,6 @@ class Plane_handler:
                 return
         raise ValueError("No plane with this id")
     
-    def get_planes(self):
-        return self.planes
-    
     def get_plane(self, id_plane):
         """this method returns the plane with the given id.
 

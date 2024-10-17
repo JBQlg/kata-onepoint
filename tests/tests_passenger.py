@@ -24,15 +24,6 @@ class TestPassenger(unittest.TestCase):
         self.assertIn("FL456", self.passenger.flights)
         self.assertEqual(len(self.passenger.flights), 2)
 
-    def test_get_flights(self):
-        """check passenger's booking list flight."""
-        self.passenger.book_flight("FL123")
-        self.passenger.book_flight("FL456")
-        flights = self.passenger.get_flights()
-        
-        self.assertEqual(flights, ["FL123", "FL456"])
-        self.assertEqual(len(flights), 2)
-        
     def test_invalid_passport_number(self):
         """Test with invalid passport number."""
         with self.assertRaises(ValueError):

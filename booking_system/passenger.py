@@ -18,9 +18,6 @@ class Passenger:
         if flight_id in self.flights:
             raise ValueError("Flight  already booked by this passenger")
         self.flights.append(flight_id)
-        
-    def get_flights(self):
-        return self.flights
 
     def __str__(self):
         return f"{self.firstname} {self.lastname} ({self.age}) - {self.passport_number}"

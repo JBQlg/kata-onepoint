@@ -81,6 +81,27 @@
                         }
                     ],
                     "statut": "PENDING"
+                },
+                {
+                    "id": "RES6",
+                    "flight_id": "FL1",
+                    "passengers": [
+                        {
+                            "passport_number": "123123123",
+                            "firstname": "h",
+                            "lastname": "d",
+                            "age": "12"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 4,
+                            "col": 4,
+                            "category": "ECONOMY",
+                            "is_booked": false
+                        }
+                    ],
+                    "statut": "CANCELLED"
                 }
             ]
         },
