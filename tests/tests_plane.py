@@ -14,6 +14,15 @@ class TestPlane(unittest.TestCase):
         self.assertEqual(self.plane.col_nb, 6)
         self.assertTrue(self.plane.id.startswith("P"))
     
+    def test_initialization_invalid_values(self):
+        """Test init with invalid values."""
+        with self.assertRaises(ValueError): 
+            Plane(model="Boeing 747", row_nb=-1, col_nb=6) 
+        with self.assertRaises(ValueError):
+            Plane(model="Boeing 747", row_nb=10, col_nb=-3)
+        with self.assertRaises(ValueError):
+            Plane(model="", row_nb=10, col_nb=6)  
+    
     def test_id_counter(self):
         """Test if the ID counter works correctly for multiple planes."""
         plane2 = Plane(model="Airbus A320", row_nb=8, col_nb=4)

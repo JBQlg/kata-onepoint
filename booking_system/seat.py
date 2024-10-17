@@ -1,6 +1,10 @@
 import booking_system.utils as ut
 class Seat:
-    def __init__(self, row, col,category = "ECONONY", is_booked = False):
+    def __init__(self, row, col,category = "ECONOMY", is_booked = False):
+        if col < 0 or row < 0:
+            raise ValueError("Row and column numbers must be positive integers.")
+        # if category not in ["ECONOMY", "BUSINESS", "FIRST_CLASS"]:
+        #     raise ValueError("Invalid category.")
         self.row = row
         self.col = col
         self.category = category

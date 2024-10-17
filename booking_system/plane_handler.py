@@ -22,6 +22,14 @@ class Plane_handler:
         print(f"Plane {plane.id} created with {plane.row_nb} rows and {plane.col_nb} columns")
         return plane
     
+    def delete_plane(self, id_plane):
+        for plane in self.planes : 
+            if plane.id == id_plane:
+                self.planes.remove(plane)
+                print(f"Plane {id_plane} deleted")
+                return
+        raise ValueError("No plane with this id")
+    
     def get_planes(self):
         return self.planes
     

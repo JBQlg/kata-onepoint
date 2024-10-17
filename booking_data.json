@@ -91,7 +91,41 @@
             "date": "2025-07-02",
             "schedule": "12:00",
             "plane_id": "P2",
-            "reservations": []
+            "reservations": [
+                {
+                    "id": "RES5",
+                    "flight_id": "FL2",
+                    "passengers": [
+                        {
+                            "passport_number": "AZEAZEAZE",
+                            "firstname": "test",
+                            "lastname": "test",
+                            "age": "34"
+                        },
+                        {
+                            "passport_number": "AZEAZEAZE",
+                            "firstname": "test",
+                            "lastname": "test",
+                            "age": "3"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 0,
+                            "col": 0,
+                            "category": "ECONOMY",
+                            "is_booked": true
+                        },
+                        {
+                            "row": 4,
+                            "col": 1,
+                            "category": "ECONOMY",
+                            "is_booked": true
+                        }
+                    ],
+                    "statut": "CONFIRMED"
+                }
+            ]
         },
         {
             "id": "FL3",
@@ -143,7 +177,41 @@
             "date": "2025-07-03",
             "schedule": "15:00",
             "plane_id": "P3",
-            "reservations": []
+            "reservations": [
+                {
+                    "id": "RES4",
+                    "flight_id": "FL4",
+                    "passengers": [
+                        {
+                            "passport_number": "123412345",
+                            "firstname": "sandrine",
+                            "lastname": "leclerc",
+                            "age": "45"
+                        },
+                        {
+                            "passport_number": "123123123",
+                            "firstname": "david",
+                            "lastname": "beaudoin",
+                            "age": "34"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 3,
+                            "col": 2,
+                            "category": "ECONONY",
+                            "is_booked": true
+                        },
+                        {
+                            "row": 4,
+                            "col": 3,
+                            "category": "ECONONY",
+                            "is_booked": true
+                        }
+                    ],
+                    "statut": "PENDING"
+                }
+            ]
         },
         {
             "id": "FL5",
@@ -179,6 +247,15 @@
             "date": "2025-04-09",
             "schedule": "10:00",
             "plane_id": "P2",
+            "reservations": []
+        },
+        {
+            "id": "FL9",
+            "departure": "Paris",
+            "arrival": "Rio de janeiro",
+            "date": "2025-09-10",
+            "schedule": "19:00",
+            "plane_id": "P5",
             "reservations": []
         }
     ]

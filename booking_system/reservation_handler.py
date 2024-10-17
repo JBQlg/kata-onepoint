@@ -58,9 +58,14 @@ class Reservation_handler:
             # display the seats
             print("Display of available seats : ")
             f.display_plane_plan(planes_list)
-            seat.append(self.fill_seat(f))
+            seat.append(self.fill_seat(f, planes_list))
 
         # confirm the reservation
+        print("Reservation details : ")
+        for p in passengers:
+            print(p)
+        for s in seat:
+            print(s)
         reservation = Reservation(f.id, passengers, seat)
         print(reservation)
         reservation.confirm()
@@ -111,15 +116,13 @@ class Reservation_handler:
         col, row,  =ut.coordinates_converter(seat)
         seat = Seat(col, row)
         # check if the seat is available
-        if flight.is_seat_available(seat) == True :
+        if flight.is_seat_available(seat, list_planes) == True :
             #check if the seat is in the plane
             row, col = ut.coordinates_converter(seat)
-            if row > list_planes[flight.plane_id].row_nb or col > list_planes[flight.plane_id].col_nb:
-                raise ValueError("The seat is not in the plane")
         else:
             raise ValueError("The seat is not available")
     
-    def fill_seat(self, flight):
+    def fill_seat(self, flight, list_planes):
         """This method allows to create a seat for a reservation according to the flight's seats availability.
 
         Args:
@@ -132,16 +135,16 @@ class Reservation_handler:
         # check if the seat is in the right format
         if len(seat) < 2:
             print("The seat must be in the format A1")
-            return self.fill_seat()
+            return self.fill_seat(flight, list_planes)
         # check if the seat is available 
         row, col =ut.coordinates_converter(seat)
         seat = Seat(col, row)
-        if flight.is_seat_available(seat) == True : 
+        if flight.is_seat_available(seat, list_planes) == True : 
             print("The seat is available")
             return seat 
         else:
             print("The seat is not available")
-            return self.fill_seat(flight)
+            return self.fill_seat(flight, list_planes)
     
     def fill_passport_number(self):
         passport_number = input("Enter the passport number : ")
@@ -322,7 +325,7 @@ class Reservation_handler:
                 print("Display of available seats:")
                 flight.display_plane_plan(planes_list)
                 # Get new seat
-                new_seat = self.fill_seat(flight)
+                new_seat = self.fill_seat(flight, planes_list)
                 # Update the seat for this passenger
                 resa.seats[i] = new_seat
                 resa.confirm()

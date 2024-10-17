@@ -7,7 +7,7 @@ class TestPassenger(unittest.TestCase):
         self.passenger = Passenger(passport_number="A12345678", firstname="John", lastname="Doe", age=30)
 
     def test_initialization(self):
-        """Test if the Passenger is initialized correctly."""
+        """Test passenger init normal case"""
         self.assertEqual(self.passenger.passport_number, "A12345678")
         self.assertEqual(self.passenger.firstname, "John")
         self.assertEqual(self.passenger.lastname, "Doe")
@@ -15,7 +15,7 @@ class TestPassenger(unittest.TestCase):
         self.assertEqual(self.passenger.flights, [])
 
     def test_book_flight(self):
-        """Test if a flight can be added to the passenger's list of flights."""
+        """Test association flight to passenger"""
         self.passenger.book_flight("FL123")
         self.assertIn("FL123", self.passenger.flights)
         self.assertEqual(len(self.passenger.flights), 1)
@@ -25,20 +25,31 @@ class TestPassenger(unittest.TestCase):
         self.assertEqual(len(self.passenger.flights), 2)
 
     def test_get_flights(self):
-        """Test if the passenger's list of booked flights is returned correctly."""
+        """check passenger's booking list flight."""
         self.passenger.book_flight("FL123")
         self.passenger.book_flight("FL456")
         flights = self.passenger.get_flights()
         
         self.assertEqual(flights, ["FL123", "FL456"])
         self.assertEqual(len(flights), 2)
+        
+    def test_invalid_passport_number(self):
+        """Test with invalid passport number."""
+        with self.assertRaises(ValueError):
+            Passenger(passport_number="", firstname="John", lastname="Doe", age=30)
 
+    def test_invalid_age(self):
+        """Test with an invalid age"""
+        with self.assertRaises(ValueError):  # Assuming you raise ValueError for invalid age
+            Passenger(passport_number="A12345678", firstname="John", lastname="Doe", age=-5)
+    
+    def test_duplicate_flight_booking(self):
+        """Test booking the same flight multiple times."""
+        self.passenger.book_flight("FL123")
+        with self.assertRaises(ValueError):
+            self.passenger.book_flight("FL123")
+        self.assertEqual(self.passenger.flights.count("FL123"), 1)
+    
     def test_str_representation(self):
-        """Test the string representation of the Passenger."""
+        """Test the str method of the Passenger."""
         self.assertEqual(str(self.passenger), "John Doe (30) - A12345678")
-    
-    def test_passport_number_uniqueness(self):
-        """Test that the passport number is used as a unique identifier."""
-        passenger2 = Passenger(passport_number="A98765432", firstname="Jane", lastname="Smith", age=25)
-        self.assertNotEqual(self.passenger.passport_number, passenger2.passport_number)
-    

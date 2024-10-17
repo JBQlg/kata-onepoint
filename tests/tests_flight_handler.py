@@ -36,7 +36,7 @@ class TestFlightHandler(unittest.TestCase):
         
         # Test deleting a flight that doesn't exist
         with self.assertRaises(ValueError):
-            self.flight_handler.delete_flight("INVALID_ID")
+            self.flight_handler.delete_flight("No flight with this id")
                     
     def test_get_flight(self):
         """Test find flight by ID"""

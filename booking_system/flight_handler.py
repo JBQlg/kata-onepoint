@@ -28,7 +28,7 @@ class Flight_handler :
                 self.flights.remove(flight)
                 print(f"Flight {id_flight} deleted")
                 return
-        print(f"Flight {id_flight} not found")
+        raise ValueError("No flight with this id")
     
     def get_flight(self, id_flight):
         for flight in self.flights : 

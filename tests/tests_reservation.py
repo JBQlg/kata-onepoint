@@ -37,15 +37,22 @@ class TestReservation(unittest.TestCase):
         )
         self.assertEqual(str(self.reservation), expected_str)
     
+    def test_empty_reservation(self):
+        """Test resa empty (passenger/seat)."""
+        with self.assertRaises(ValueError): 
+            Reservation(flight_id="FL123", passengers=[], seats=[self.seat1])
+        with self.assertRaises(ValueError):
+            Reservation(flight_id="FL123", passengers=[self.passenger1], seats=[])
+
     def test_confirm_reservation(self):
-        """Test if the reservation can be confirmed and seats are booked."""
+        """Test reservation can be confirmed and seats are booked."""
         self.reservation.confirm()
         self.assertEqual(self.reservation.statut, "CONFIRMED")
         for seat in self.reservation.seats:
             self.assertTrue(seat.is_booked)
     
     def test_cancel_reservation(self):
-        """Test if the reservation can be cancelled and seats are released."""
+        """Test reservation can be cancelled and seats are released."""
         # First confirm the reservation, then cancel it
         self.reservation.confirm()
         self.reservation.cancel()

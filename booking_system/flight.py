@@ -1,8 +1,13 @@
 from booking_system.seat import Seat
 from booking_system.reservation import Reservation
+from booking_system.utils import validate_date
 class Flight: 
     _id_counter = 1
     def __init__(self, departure, arrival, schedule, date, plane_id, reservations=[]) :
+        if plane_id is None or departure == "" or arrival == "" or date == "" or schedule == "":
+            raise ValueError("All fields must be filled")
+        # check date
+        validate_date(date)
         self.id = "FL"+str(Flight._id_counter)
         Flight._id_counter += 1
         self.departure = departure
@@ -16,8 +21,12 @@ class Flight:
     def __str__(self):
         return f"Flight {self.id} : {self.departure} to {self.arrival} ({self.date} - {self.schedule}) on plane {self.plane_id}"
     
-    def is_seat_available(self, seat):
-        # Check if the seat is already booked
+    def is_seat_available(self, seat, planes):
+        # Check if the seat is already booked or out of bounds
+        for p in planes:
+            if p.id == self.plane_id:
+                if seat.row > p.row_nb or seat.col > p.col_nb:
+                    return False
         for resa in self.reservations:
             for s in resa.seats:
                 if s.row == seat.row and s.col == seat.col:

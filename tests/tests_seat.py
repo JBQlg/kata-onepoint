@@ -19,14 +19,37 @@ class TestSeat(unittest.TestCase):
         self.assertEqual(self.seat2.col, 1)
         self.assertEqual(self.seat2.category, "BUSINESS")
         self.assertTrue(self.seat2.is_booked)
+        
+    # def test_initialization_invalid_values(self): # not implemented handler classes
+    #     """Test init with invalid values."""
+    #     with self.assertRaises(ValueError):
+    #         Seat(row=-1, col=2, category="ECONOMY", is_booked=False)
+    #     with self.assertRaises(ValueError):
+    #         Seat(row=3, col=-1, category="ECONOMY", is_booked=False)
+    #     with self.assertRaises(ValueError):
+    #         Seat(row=3, col=2, category="INVALID", is_booked=False)
     
     def test_seat_status(self):
         """Test if the seat status"""
-        self.assertFalse(self.seat1.is_booked)  # Initially not booked
-        self.seat1.is_booked = True  # Change status to booked
-        self.assertTrue(self.seat1.is_booked)   # Now it should be booked
+        self.assertFalse(self.seat1.is_booked)  
+        self.seat1.is_booked = True  
+        self.assertTrue(self.seat1.is_booked)  
+        
+    # def test_seat_category(self): # not implemented handler classes 
+    #     """Test if different seat categories can be manipulated."""
+    #     first_class_seat = Seat(row=1, col=1, category="FIRST_CLASS", is_booked=False)
+    #     self.assertEqual(first_class_seat.category, "FIRST_CLASS")
+    #     self.assertEqual(str(first_class_seat), "Seat : B2 (FIRST_CLASS) - AVAILABLE")
+
+    def test_invalid_coordinates_conversion(self):
+        """Test how the system handles invalid coordinates."""
+        with self.assertRaises(ValueError):
+            ut.reverse_coordinates_converter(-1, 5)
+        with self.assertRaises(ValueError):
+            ut.reverse_coordinates_converter(3, -1)
+
     
-    def test_str_representation(self):
+    def test_str_function_representation(self):
         """Test the str method of the Seat"""
         # note col is 1 mean B
         # wanted format : "Seat : C4 (ECONONY) - AVAILABLE"

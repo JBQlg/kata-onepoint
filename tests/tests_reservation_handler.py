@@ -14,7 +14,7 @@ class TestReservationHandler(unittest.TestCase):
         Flight._id_counter = 1
         Reservation._id_counter = 1
         self.plane = Plane("Airbus A320", 10, 6)
-        self.flight = Flight(departure="Paris", arrival="New York", date="2021-07-01", schedule="12:00", plane_id=self.plane.id)
+        self.flight = Flight(departure="Paris", arrival="New York", date="2025-07-01", schedule="12:00", plane_id=self.plane.id)
         self.passenger = Passenger("123456789", "John", "Doe", 34)
         self.seat = Seat(row=0, col=0)
     
@@ -30,11 +30,11 @@ class TestReservationHandler(unittest.TestCase):
         self.assertEqual(self.flight.reservations[0].seats[0].row, 0)
         self.assertEqual(self.flight.reservations[0].seats[0].col, 0)
         # Vérifier que le siège a été assigné
-        self.assertFalse(self.flight.is_seat_available(Seat(row=0, col=0)))
+        self.assertFalse(self.flight.is_seat_available(Seat(row=0, col=0),[self.plane]))
 
     @patch('builtins.input', side_effect=['y', 'RES1', 'y', '1' ,'123123123', 'Jane', 'Doe', '29'])
     def test_modify_reservation_modify_passenger(self, mock_input):
-        """Test de la modification d'un passager"""
+        """Test passenger modification"""
         flights_list = [self.flight]
         planes_list = [self.plane]
         
@@ -47,7 +47,7 @@ class TestReservationHandler(unittest.TestCase):
     @patch('builtins.input', side_effect=['y', 'RES1', 'y', '2', 'B3'])
     @patch('booking_system.reservation_handler.Reservation_handler.fill_seat', return_value=Seat(row=1, col=2)) 
     def test_modify_reservation_modify_seat(self, mock_input, mock_fill_seat):
-        """Test de la modification du siège pour un passager"""
+        """Test modification seat"""
         flights_list = [self.flight]
         planes_list = [self.plane]
         flights_list = self.reservation_handler.modify_reservation("2", flights_list, planes_list)
@@ -55,14 +55,42 @@ class TestReservationHandler(unittest.TestCase):
         self.assertEqual(modified_seat.row, 1)
         self.assertEqual(modified_seat.col, 2) 
 
+    @patch('builtins.input', side_effect=['FL1', '2', '123456789', 'John', 'Doe', '34', 'B3', '987654321', 'Jane', 'Doe', '30', 'B4'])
+    def test_create_reservation_multiple_passengers(self, mock_input):
+        """Test creation of a reservation with multiple passengers."""
+        planes_list = [self.plane]
+        flights_list = [self.flight]
+        self.reservation_handler.create_reservation(flights_list, planes_list)
+        self.assertEqual(len(self.flight.reservations), 2)
+        reservation = self.flight.reservations[1]
+        self.assertEqual(len(reservation.passengers), 2)  
+        self.assertEqual(len(reservation.seats), 2)  
+        self.assertEqual(reservation.passengers[0].passport_number, "123456789")
+        self.assertEqual(reservation.passengers[1].passport_number, "987654321")
+
+    @patch('builtins.input', side_effect=['y', 'INVALID_ID', 'n'])
+    def test_modify_reservation_invalid_id(self, mock_input):
+        """Test modification with an invalid reservation ID."""
+        flights_list = [self.flight]
+        planes_list = [self.plane]
+        with self.assertRaises(ValueError):
+            self.reservation_handler.modify_reservation("1", flights_list, planes_list)
+        
+    @patch('builtins.input', side_effect=['y', 'RES1', 'y','123456789','Z99'])
+    def test_modify_reservation_invalid_seat_format(self, mock_input):
+        """Test modification seat with invalid format, with several passengers"""
+        flights_list = [self.flight]
+        planes_list = [self.plane]
+        with self.assertRaises(ValueError):
+            self.reservation_handler.modify_reservation("2", flights_list, planes_list)
+
     @patch('builtins.input', side_effect=['y', 'RES1', 'y', '3']) 
     def test_modify_reservation_cancel_reservation(self, mock_input):
-        """Test de l'annulation de la réservation."""
+        """Test cancel reservation"""
         flights_list = [self.flight]
         planes_list = [self.plane]
 
         flights_list = self.reservation_handler.modify_reservation("3", flights_list, planes_list)
-        #print all
         for f in flights_list:
             for r in f.reservations:
                 print(r)

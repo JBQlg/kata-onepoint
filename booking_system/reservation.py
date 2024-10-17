@@ -7,6 +7,8 @@ class Reservation:
     _id_counter = 1
     
     def __init__(self, flight_id, passengers, seats) :
+        if len(passengers) != len(seats):
+            raise ValueError("The number of passengers and seats must be the same and not null")
         self.id = "RES"  + str(Reservation._id_counter)
         Reservation._id_counter += 1
         self.flight_id = flight_id # allow to find the instance of the flight in the flight

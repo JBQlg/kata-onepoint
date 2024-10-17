@@ -1,7 +1,9 @@
 
 class Plane : 
     _id_counter = 1
-    def __init__(self, model, row_nb, col_nb) : 
+    def __init__(self, model, row_nb, col_nb) :
+        if model == "" or row_nb <= 0 or col_nb <= 0:
+            raise ValueError("All fields must be filled correctly")
         self.id = "P"+str(Plane._id_counter)
         Plane._id_counter += 1
         self.model = model
