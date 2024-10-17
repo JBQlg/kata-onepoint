@@ -162,6 +162,24 @@
             "schedule": "9:00",
             "plane_id": "P4",
             "reservations": []
+        },
+        {
+            "id": "FL7",
+            "departure": "Paris",
+            "arrival": "Tokyo",
+            "date": "2025-12-12",
+            "schedule": "10:00",
+            "plane_id": "P4",
+            "reservations": []
+        },
+        {
+            "id": "FL8",
+            "departure": "Paris",
+            "arrival": "Berlin",
+            "date": "2025-04-09",
+            "schedule": "10:00",
+            "plane_id": "P2",
+            "reservations": []
         }
     ]
 }

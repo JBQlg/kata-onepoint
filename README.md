@@ -1,5 +1,5 @@
 
-## Projet de simulation de réservation de vols - KATA Onepoint
+# Projet de simulation de réservation de vols - KATA Onepoint
 
 Un code permettant de simuler un système de réservation de vol avec attribution des places dans un avion. 
 
@@ -19,14 +19,33 @@ Ensuite, une approche avec des commandes directes a été ajoutée pour permettr
 Enfin, une persistance des données a été ajoutée pour permettre de sauvegarder les données des vols et des passagers.
 
 
-#### Approches de développement
-* approche de base avec menu contextuel
-* approche avec commande directe 
+#### Approches de fonctionnement
+* Approche de base avec menu contextuel
+  
+  Dans cette approche, le code fonctionne avec des menus contextuels permettant de naviguer dans les différentes fonctionnalités du code. Selon le choix fait les différentes actions sont réalisées avec des demandes d'informations complémentaires si nécessaire.
+
+  ![Menu principal](/documentation/diagram/screen_main_menu.png)
+
+* Approche avec commande directe 
+  
+  La seconde approche vient en réalité se greffer aux méthodes de la première. Elle a pour objectif de permettre une utilisation plus fluide du code en permettant de réaliser des actions concrètes sans passer par les menus contextuels.
+  Elle permet donc un gain de temps pour la plupart des actions (exceptées celles de création d'une réservation nécessitant une plus grande quantité d'informations et l'affichage entre étapes intermédiaire du plan de l'appareil). Cela permet également de faciliter des implémentations avec d'autres systèmes de gestion ultérieur.
+
+    * Exemple d'ajout d'un vol : 
+
+  ![Exemple ajouter un vol ](/documentation/diagram/direct_cmd_add_flight_ex.png)
+
+    * Détail des commandes disponibles :
+  
+    ![Détail des commandes](/documentation/diagram/direct_cmd_help.png)
 
 #### Persistance des données 
-* approche avec JSON
+* Persistance des données via JSON
+  
+  Bien qu'une fonction ai été ajoutée pour simuler des exemples d'éléments de ce simulateur (avions, vols, réservations, ...), les données saisies sont sauvegardées automatiquement dans un fichier JSON.
+
+  ![Exemple de données sauvegardées](/documentation/diagram/json_data_example.png)
 
   
 ---
-
-Les différentes notes de conceptions expliquant les différentes approches de développement et les choix de conception sont disponibles dans le dossier `documentation`.
+Dans la section  `documentation` vous trouverez les premiers diagrammes UML de conceptions permettant d'imaginer l'évolution de ce programme pendant ce kata (tous n'y sont pas forcément (notament les derniers mais si intéressé, je peux les fournir).
