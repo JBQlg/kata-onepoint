@@ -32,4 +32,9 @@ class Flight_handler :
         print(f"Flight {id_flight} not found")
         return None
     
-    
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Flight_handler object from a dictionary (JSON deserialization)."""
+        handler = cls()
+        handler.flights = [Flight.from_dict(flight_data) for flight_data in data]
+        return handler

@@ -1,0 +1,109 @@
+{
+    "planes": [
+        {
+            "id": "P1",
+            "model": "Airbus A320",
+            "row_nb": 10,
+            "col_nb": 6
+        },
+        {
+            "id": "P2",
+            "model": "Boeing 747",
+            "row_nb": 5,
+            "col_nb": 4
+        },
+        {
+            "id": "P3",
+            "model": "Airbus A380",
+            "row_nb": 6,
+            "col_nb": 5
+        },
+        {
+            "id": "P4",
+            "model": "Boeing 787",
+            "row_nb": 7,
+            "col_nb": 6
+        }
+    ],
+    "flights": [
+        {
+            "id": "FL1",
+            "departure": "Paris",
+            "arrival": "New York",
+            "date": "2021-07-01",
+            "schedule": "12:00",
+            "plane_id": "P1",
+            "reservations": []
+        },
+        {
+            "id": "FL2",
+            "departure": "Paris",
+            "arrival": "London",
+            "date": "2021-07-02",
+            "schedule": "12:00",
+            "plane_id": "P2",
+            "reservations": []
+        },
+        {
+            "id": "FL3",
+            "departure": "Paris",
+            "arrival": "Madeira",
+            "date": "2021-07-02",
+            "schedule": "8:00",
+            "plane_id": "P2",
+            "reservations": [
+                {
+                    "id": "RES1",
+                    "flight_id": "FL3",
+                    "passengers": [
+                        {
+                            "passport_number": "123123123",
+                            "firstname": "antoine",
+                            "lastname": "croute",
+                            "age": "12"
+                        },
+                        {
+                            "passport_number": "121212122",
+                            "firstname": "daniel",
+                            "lastname": "croute",
+                            "age": "21"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 2,
+                            "col": 0,
+                            "category": "ECONONY",
+                            "is_booked": true
+                        },
+                        {
+                            "row": 2,
+                            "col": 1,
+                            "category": "ECONONY",
+                            "is_booked": true
+                        }
+                    ],
+                    "statut": "PENDING"
+                }
+            ]
+        },
+        {
+            "id": "FL4",
+            "departure": "Paris",
+            "arrival": "Tokyo",
+            "date": "2021-07-03",
+            "schedule": "15:00",
+            "plane_id": "P3",
+            "reservations": []
+        },
+        {
+            "id": "FL5",
+            "departure": "Paris",
+            "arrival": "Los Angeles",
+            "date": "2021-07-04",
+            "schedule": "10:00",
+            "plane_id": "P4",
+            "reservations": []
+        }
+    ]
+}

@@ -18,21 +18,21 @@ class Passenger:
     def __str__(self):
         return f"{self.firstname} {self.lastname} ({self.age}) - {self.passport_number}"
     
-    # def to_dict(self):
-    #     """Convert Passenger object to a dictionary for JSON serialization."""
-    #     return {
-    #         "passport_number": self.passport_number,
-    #         "firstname": self.firstname,
-    #         "lastname": self.lastname,
-    #         "age": self.age
-    #     }
+    def to_dict(self):
+        """Convert Passenger object to a dictionary for JSON serialization."""
+        return {
+            "passport_number": self.passport_number,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "age": self.age
+        }
     
-    # @classmethod
-    # def from_dict(cls, data):
-    #     """Create a Passenger object from a dictionary (JSON deserialization)."""
-    #     return cls(
-    #         passport_number=data["passport_number"],
-    #         firstname=data["firstname"],
-    #         lastname=data["lastname"],
-    #         age=data["age"]
-    #     )
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Passenger object from a dictionary (JSON deserialization)."""
+        return cls(
+            passport_number=data["passport_number"],
+            firstname=data["firstname"],
+            lastname=data["lastname"],
+            age=data["age"]
+        )

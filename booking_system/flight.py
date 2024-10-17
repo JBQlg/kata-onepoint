@@ -89,28 +89,28 @@ class Flight:
                 return places_format
         print(f"Plane with ID {self.plane_id} not found.")
 
-    # def to_dict(self):
-    #     """Convert the Flight object to a dictionary for JSON serialization."""
-    #     return {
-    #         "id": self.id,
-    #         "departure": self.departure,
-    #         "arrival": self.arrival,
-    #         "date": self.date,
-    #         "schedule": self.schedule,
-    #         "plane_id": self.plane_id,
-    #         "reservations": [reservation.to_dict() for reservation in self.reservations]
-    #     }
+    def to_dict(self):
+        """Convert the Flight object to a dictionary for JSON serialization."""
+        return {
+            "id": self.id,
+            "departure": self.departure,
+            "arrival": self.arrival,
+            "date": self.date,
+            "schedule": self.schedule,
+            "plane_id": self.plane_id,
+            "reservations": [reservation.to_dict() for reservation in self.reservations]
+        }
     
-    # @classmethod
-    # def from_dict(cls, data):
-    #     """Create a Flight object from a dictionary (JSON deserialization)."""
-    #     reservations = [Reservation.from_dict(resa) for resa in data["reservations"]]
-    #     return cls(
-    #         departure=data["departure"],
-    #         arrival=data["arrival"],
-    #         date=data["date"],
-    #         schedule=data["schedule"],
-    #         plane_id=data["plane_id"],
-    #         reservations=reservations,
-    #         id=data["id"]
-    #     )
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Flight object from a dictionary (JSON deserialization)."""
+        flight = cls(
+            departure=data["departure"],
+            arrival=data["arrival"],
+            date=data["date"],
+            schedule=data["schedule"],
+            plane_id=data["plane_id"]
+        )
+        # Charger les réservations
+        flight.reservations = [Reservation.from_dict(resa_data) for resa_data in data.get("reservations", [])]
+        return flight

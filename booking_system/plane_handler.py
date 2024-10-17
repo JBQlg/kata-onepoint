@@ -21,3 +21,10 @@ class Plane_handler:
         print(f"Plane {id_plane} not found")
         return None
     
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Plane_handler object from a dictionary (JSON deserialization)."""
+        handler = cls()
+        # Charger chaque avion depuis la liste dans le JSON
+        handler.planes = [Plane.from_dict(plane_data) for plane_data in data]
+        return handler

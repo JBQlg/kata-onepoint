@@ -11,21 +11,19 @@ class Plane :
     def __str__(self):
         return f"Plane {self.id} : {self.model} ({self.row_nb} x {self.col_nb})"    
     
-    # def to_dict(self):
-    #     """Convert the Plane object to a dictionary for JSON serialization."""
-    #     return {
-    #         "id": self.id,
-    #         "model": self.model,
-    #         "row_nb": self.row_nb,
-    #         "col_nb": self.col_nb
-    #     }
-    
-    # @classmethod
-    # def from_dict(cls, data):
-    #     """Create a Plane object from a dictionary (JSON deserialization)."""
-    #     return cls(
-    #         model=data["model"],
-    #         row_nb=data["row_nb"],
-    #         col_nb=data["col_nb"],
-    #         id=data["id"]
-    #     )
+    def to_dict(self):
+        """Convert the Plane object to a dictionary for JSON serialization."""
+        return {
+            "id": self.id,
+            "model": self.model,
+            "row_nb": self.row_nb,
+            "col_nb": self.col_nb
+        }
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Plane object from a dictionary (JSON deserialization)."""
+        return cls(
+            model=data["model"],
+            row_nb=data["row_nb"],
+            col_nb=data["col_nb"],
+        )
