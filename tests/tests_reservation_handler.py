@@ -12,7 +12,7 @@ class TestReservationHandler(unittest.TestCase):
         self.reservation_handler = Reservation_handler()
         Plane._id_counter = 1
         Flight._id_counter = 1
-        # Reservation._id_counter = 1
+        Reservation._id_counter = 1
         self.plane = Plane("Airbus A320", 10, 6)
         self.flight = Flight(departure="Paris", arrival="New York", date="2021-07-01", schedule="12:00", plane_id=self.plane.id)
         self.passenger = Passenger("123456789", "John", "Doe", 34)
@@ -62,6 +62,10 @@ class TestReservationHandler(unittest.TestCase):
         planes_list = [self.plane]
 
         flights_list = self.reservation_handler.modify_reservation("3", flights_list, planes_list)
+        #print all
+        for f in flights_list:
+            for r in f.reservations:
+                print(r)
         self.assertEqual(self.flight.reservations[0].statut, "CANCELLED")
         #check all seats of the reservation are free
         for seat in self.flight.reservations[0].seats:
