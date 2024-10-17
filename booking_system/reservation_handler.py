@@ -130,7 +130,7 @@ class Reservation_handler:
         """
         seat = input("Enter the new seat number (B6): ")
         # check if the seat is in the right format
-        if len(seat) != 2:
+        if len(seat) < 2:
             print("The seat must be in the format A1")
             return self.fill_seat()
         # check if the seat is available 
@@ -353,9 +353,10 @@ class Reservation_handler:
             print("Reservation not cancelled")
         return resa        
     
-    def print_reservation_details(self, flights):
+    def print_reservation_details(self, flights, id_reservation = ""):
         print("Print reservation details")
-        id_reservation = input("Enter the reservation id : ")
+        if id_reservation == "":
+            id_reservation = input("Enter the reservation id : ")
         #check if the reservation exist
         for f in flights:
             for resa in f.reservations:

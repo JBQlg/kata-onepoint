@@ -25,7 +25,7 @@ class TestFlight(unittest.TestCase):
         
     def test_str(self):
         """Test the __str__ method"""
-        self.assertEqual(str(self.flight), "Flight FL1 : Paris to New York (12:00) on plane P1")
+        self.assertEqual(str(self.flight), "Flight FL1 : Paris to New York (2024-05-01 - 12:00) on plane P1")
         
     def test_is_seat_available(self):
         """Test the is_seat_available method"""

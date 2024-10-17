@@ -20,14 +20,9 @@ def reverse_coordinates_converter(col, row):
     """
     # col =col - 1
     # row = row - 1
-    lettre = chr(col + ord('A'))  # Convert column number to letter
-    seat_number = str(row + 1)  # Convert row number back to 1-indexed seat number
+    lettre = chr(col + ord('A'))  
+    seat_number = str(row + 1)  
     return lettre + seat_number
-
-# def reverse_coordinates_converter(col, row):
-#     """Convertit les coordonnées (colonne, rangée) en format lettre-colonne et numéro-rangée (ex : 'C3')"""
-#     return f"{chr(65 + col)}{row + 1}"
-
 
 def is_passport_number_valid(passport_number):
     """This function checks if the passport number is valid.
@@ -37,13 +32,22 @@ def is_passport_number_valid(passport_number):
         return False
     return True
 
-def save_json(): 
-    """This function allow to save the full system data in a json file.
-    """
-    pass
 
-def load_json():
-    """This function allow to load the full system data from a json file at the start of the program.
+from datetime import datetime
+
+def validate_date(date_str):
+    """Valide que la chaîne de caractères correspond bien au format d'une date.
+    
+    Args:
+        date_str (str): La chaîne de caractères représentant une date.
+    
+    Raises:
+        ValueError: Si la chaîne de caractères n'est pas au format attendu.
     """
-    pass
+    try:
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError(f"La date '{date_str}' n'est pas au format attendu 'YYYY-MM-DD'.")
+    if date_obj.date() <= datetime.today().date():
+        raise ValueError(f"La date '{date_str}' doit être dans le futur.")
 

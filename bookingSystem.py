@@ -1,6 +1,7 @@
 from booking_system.flight_handler import Flight_handler
 from booking_system.plane_handler import Plane_handler
 from booking_system.reservation_handler import Reservation_handler  
+import argparse
 import json 
 
 class BookingSystem: 
@@ -25,9 +26,14 @@ class BookingSystem:
         print("3. Modifier une réservation")
         print("4. Afficher les détails d'une réservation")
         print("5. Quitter")
+        print("-------------------------")
+        print("Fonctionnalités supplémentaires :\n")
+        print("6. Créer un avion")
+        print("7. Créer un vol")
+        print("8. Affichage des avions enregistrés")
         choix = input("Veuillez entrer votre choix : ")
         #check if the choice is valid
-        while choix not in ["1", "2", "3", "4", "5"]:
+        while choix not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
             print("Choix invalide")
             choix = input("Veuillez entrer votre choix : ")
         return choix
@@ -62,10 +68,19 @@ class BookingSystem:
             elif choix == "5":
                 self.save_data()
                 break
+            elif choix == "6":
+                self.plane_handler.create_plane(input("Modèle de l'avion : "), int(input("Nombre de rangées : ")), int(input("Nombre de colonnes : ")))
+            elif choix == "7":
+                print("Voici la liste des avions disponibles : ")
+                print(self.plane_handler)
+                plane = self.plane_handler.get_plane(input("ID de l'avion : "))
+                self.flight_handler.create_flight(plane_id=plane.id, departure=input("Départ : "), destination=input("Destination : "), schedule=input("Horaire : "), date=input("Date : "), reservations=[])
+            elif choix == "8":
+                print(self.plane_handler)
             else:
                 print("Choix invalide")
-    
-    
+
+    #  Simulation item method 
     def items_simulation(self):
         """This function create some items to simulate the system
         """
@@ -88,7 +103,7 @@ class BookingSystem:
         # flight = self.reservation_handler.assign_seat(flight=self.flight_handler.flights[0], passenger=passenger1, seat="C5", list_planes=self.plane_handler.planes)    
         # flight = self.reservation_handler.assign_seat(flight=self.flight_handler.flights[0], passenger=passenger2, seat="D5", list_planes=self.plane_handler.planes)    
             
-    # ------------------- JSON serialization methods -------------------
+    # JSON serialization methods 
     def save_data(self):
         """Save all the data into a JSON file."""
         # create data dictionary
@@ -99,27 +114,6 @@ class BookingSystem:
         with open(self.DATA_FILE, 'w') as f:
             json.dump(data, f, indent=4)
         print("Données sauvegardées avec succès.")
-    
-    # def load_data(self):
-        ## """Load system data from the JSON file."""
-        # try:
-        #     #open
-        #     with open(self.DATA_FILE, 'r') as f:
-        #         data = json.load(f)
-        #     # load planes
-        #     for plane_data in data["planes"]:
-        #         self.plane_handler.planes.append(Plane_handler.from_dict(plane_data))
-            
-        #     # load flights
-        #     for flight_data in data["flights"]:
-        #         self.flight_handler.flights.append(Flight_handler.from_dict(flight_data))
-            
-        #     # # Recharger les réservations
-        #     # self.reservation_handler.from_dict(data["reservations"])
-            
-        #     print("Données chargées avec succès.")
-        # except FileNotFoundError:
-        #     print("Fichier de données non trouvé. Début avec un nouveau système.")
             
     def load_data(self):
         """Load system data from the JSON file."""
@@ -136,18 +130,127 @@ class BookingSystem:
             print("Données chargées avec succès.")
         except FileNotFoundError:
             print("Fichier de données non trouvé.")
-        # except json.JSONDecodeError as e:
-        #     print(f"Erreur de décodage JSON: {e}")
+        except json.JSONDecodeError as e:
+             print(f"Erreur de décodage JSON: {e}")
+
+    # Direct command line handler
+    def run(self, args):
+        """This method handle the direct command line system and make corresponding call with the right handler."""
+        command_executed = False  # token to check if a cmd is executed successfully
+        if args.command == "reserve":
+            # we keep this contextual menu, because  we need to knwow available seats in flihgts
+            self.flight_handler.flights = self.reservation_handler.create_reservation(self.flight_handler.flights, self.plane_handler.planes)
+            command_executed = True
+            
+        elif args.command == "list-flights":
+            print(self.flight_handler)
+            command_executed = True
+            
+        elif args.command == "list-planes":
+            print(self.plane_handler)
+            command_executed = True
+            
+            # modify reservation, as create reservation we keep this contextual menu
+        elif args.command == "modify-reservation":
+            self.flight_handler.flights = self.reservation_handler.modify_reservation(args.subcommand, self.flight_handler.flights, self.plane_handler.planes)
+            command_executed = True
+            
+        elif args.command == "details":
+            self.reservation_handler.print_reservation_details(self.flight_handler.flights, args.reservation_id)
+            command_executed = True
+            
+        elif args.command == "add_plane":
+            self.plane_handler.create_plane(args.model, args.rows, args.columns)
+            print(f"Avion ajouté : Modèle {args.model}, {args.rows} rangées, {args.columns} colonnes.")
+            command_executed = True
+            self.save.data()
+            return
+        elif args.command == "add_flight":
+            # check if the plane exists
+            plane = self.plane_handler.get_plane(args.plane_id) 
+            if plane:
+                self.flight_handler.create_flight(plane_id=plane.id, departure=args.departure, destination=args.destination, schedule=args.schedule, date=args.date, reservations=[])
+                print(f"Vol ajouté de {args.departure} à {args.destination} à {args.schedule} le {args.date}")
+                command_executed = True
+            else:
+                print(f"L'avion avec ID {args.plane_id} n'a pas été trouvé.")
+                
+        elif args.command == "quit":
+            self.save_data()
+            print("Données sauvegardées. Système quitté.")
+            return
+        else:
+            self.main_menu_handler()
+
+        # if a command is executed, save the data
+        if command_executed:
+            self.save_data()
+    
+    def show_help(self):
+        """Display the list of available commands and their usage."""
+        print("\nListe des commandes disponibles :")
+        print("  reserve             : Créer une nouvelle réservation.")
+        print("  list-flights        : Lister tous les vols disponibles.")
+        print("  list-planes         : Lister tous les avions disponibles.")
+        print("  modify-reservation  : Modifier une réservation existante. Utiliser avec un sous-argument [1, 2, 3] pour spécifier ce que vous voulez modifier.")
+        print("                        - 1 = passager")
+        print("                        - 2 = siège")
+        print("                        - 3 = annuler la réservation")
+        print("  details             : Voir les détails d'une réservation.")
+        print("  add-plane           : Ajouter un nouvel avion. Utiliser avec les arguments suivants : modèle, rangées, colonnes.")
+        print("  add-flight          : Ajouter un nouveau vol. Utiliser avec les arguments suivants : plane_id, départ, destination, horaire, date.")
+        print("  quit                : Sauvegarder les données et quitter le système.")
+        print("  help                : Afficher cette aide.")
+
+
+
+# main method to run the system
+def main():
+    
+    # handle direct command line system
+    parser = argparse.ArgumentParser(description="Booking System Command Line Interface")
+    subparsers = parser.add_subparsers(dest="command")
+    # add subcommands to make user choices
+    subparsers.add_parser("reserve", help="Create a new reservation")
+    subparsers.add_parser("list-flights", help="List all available flights")
+    modify_parser = subparsers.add_parser("modify-reservation", help="Modify an existing reservation")
+    modify_parser.add_argument("subcommand", choices=["1", "2", "3"], help="What to modify: 1 = passenger, 2 = seat, 3 = cancel reservation")
+    details_parser = subparsers.add_parser("details", help="View reservation details")
+    details_parser.add_argument("reservation_id", type=str, help="The ID of the reservation to view")
+    subparsers.add_parser("quit", help="Save data and quit the system")
+    #new plane
+    add_plane_parser = subparsers.add_parser("add-plane", help="Add a new plane")
+    add_plane_parser.add_argument("model", type=str, help="The model of the plane")
+    add_plane_parser.add_argument("rows", type=int, help="The number of rows in the plane")
+    add_plane_parser.add_argument("columns", type=int, help="The number of columns in the plane")
+    #new flight
+    add_flight_parser = subparsers.add_parser("add-flight", help="Add a new flight")
+    add_flight_parser.add_argument("plane_id", type=str, help="The ID of the plane for this flight")
+    add_flight_parser.add_argument("departure", type=str, help="The departure city")
+    add_flight_parser.add_argument("destination", type=str, help="The destination city")
+    add_flight_parser.add_argument("schedule", type=str, help="The time of departure")
+    add_flight_parser.add_argument("date", type=str, help="The date of the flight (format YYYY-MM-DD)")
+    # list planes
+    subparsers.add_parser("list-planes", help="List all available planes")
+    # help 
+    subparsers.add_parser("help", help="Show help documentation")
+    args = parser.parse_args()
+
+    # Create the system and run it based on the arguments
+    system = BookingSystem()
+    system.run(args)
 
     
 if __name__ == "__main__":
-    booking = BookingSystem()
+    main()
+    # booking = BookingSystem()
     
-    # simulation des items pour tester le système
-    print("Simulation des items : " )
-    #booking.items_simulation()
+    # # simulation des items pour tester le système
+    # print("Simulation des items : " )
+    # #booking.items_simulation()
 
-    # lancement du menu principal
-    booking.main_menu_handler()
+    # # lancement du menu principal
+    # booking.main_menu_handler()
     
-    print("Au revoir !")
+    # print("Au revoir !")
+    

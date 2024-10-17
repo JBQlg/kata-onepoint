@@ -1,6 +1,5 @@
 from booking_system.flight import Flight
-
-
+from booking_system.utils import validate_date
 class Flight_handler : 
     def __init__(self):
         self.flights = []
@@ -8,10 +7,16 @@ class Flight_handler :
     def __str__(self):
         flights = ""
         for flight in self.flights:
-            flights += f"Flight {flight.id} : {flight.departure} to {flight.arrival} ({flight.date}) \n"
+            flights += f"{flight} \n"
         return(flights)
     
     def create_flight(self, plane_id, departure, destination, schedule, date, reservations):
+        # checking inputs
+        if not isinstance(plane_id, str):
+            raise ValueError("plane_id must be a string")
+        if not isinstance(departure, str) or not isinstance(destination, str):
+            raise ValueError("departure and destination must be a string")
+        validate_date(date)
         flight = Flight(plane_id=plane_id, departure=departure, arrival=destination, date=date, schedule=schedule, reservations=reservations)
         self.flights.append(flight)
         print(f"Flight {flight.id} created for {flight.departure} to {flight.arrival} on {flight.date}")

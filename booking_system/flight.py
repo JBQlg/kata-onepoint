@@ -2,7 +2,7 @@ from booking_system.seat import Seat
 from booking_system.reservation import Reservation
 class Flight: 
     _id_counter = 1
-    def __init__(self, departure, arrival, date, schedule, plane_id, reservations=[]) :
+    def __init__(self, departure, arrival, schedule, date, plane_id, reservations=[]) :
         self.id = "FL"+str(Flight._id_counter)
         Flight._id_counter += 1
         self.departure = departure
@@ -14,10 +14,7 @@ class Flight:
         
 
     def __str__(self):
-        return f"Flight {self.id} : {self.departure} to {self.arrival} ({self.schedule}) on plane {self.plane_id}"
-    
-    def get_reservations(self):
-        return self.reservation
+        return f"Flight {self.id} : {self.departure} to {self.arrival} ({self.date} - {self.schedule}) on plane {self.plane_id}"
     
     def is_seat_available(self, seat):
         # Check if the seat is already booked
