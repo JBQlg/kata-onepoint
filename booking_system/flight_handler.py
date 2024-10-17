@@ -11,6 +11,22 @@ class Flight_handler :
         return(flights)
     
     def create_flight(self, plane_id, departure, destination, schedule, date, reservations):
+        """This method creates a flight with the given parameters.
+        Args:
+            plane_id (str): The plane id to be used for the flight.
+            departure (str): Aerport of departure.
+            destination (str): Aerport of arrival.
+            schedule (str): Time of departure.
+            date (date): date of the flight.
+            reservations (reservation): List of reservations for the flight.
+
+        Raises:
+            ValueError: plane_id must be a string
+            ValueError: departure and destination must be a string
+
+        Returns:
+            flight: created flight
+        """
         # checking inputs
         if not isinstance(plane_id, str):
             raise ValueError("plane_id must be a string")
@@ -23,6 +39,13 @@ class Flight_handler :
         return flight
     
     def delete_flight(self, id_flight):
+        """This method deletes a flight with the given id.
+        Args:
+            id_flight (str): The id of the flight to delete
+
+        Raises:
+            ValueError: No flight with this id
+        """
         for flight in self.flights : 
             if flight.id == id_flight:
                 self.flights.remove(flight)
@@ -31,6 +54,13 @@ class Flight_handler :
         raise ValueError("No flight with this id")
     
     def get_flight(self, id_flight):
+        """This method returns the flight with the given id.
+        Args:
+            id_flight (str): id of the flight to return
+
+        Returns:
+            flight: flight with the given id
+        """
         for flight in self.flights : 
             if flight.id == id_flight:
                 return flight

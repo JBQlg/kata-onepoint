@@ -12,6 +12,20 @@ class Plane_handler:
         return(planes)
     
     def create_plane(self, model, row_nb, col_nb):
+        """THis method creates a plane with the given parameters.
+
+        Args:
+            model (str): plane model
+            row_nb (int): row number
+            col_nb (int): column number
+
+        Raises:
+            ValueError: model must be a string
+            ValueError: row_nb and col_nb must be an integer
+
+        Returns:
+            plane : created plane
+        """
         # checking inputs
         if not isinstance(model, str):
             raise ValueError("model must be a string")
@@ -23,6 +37,14 @@ class Plane_handler:
         return plane
     
     def delete_plane(self, id_plane):
+        """this method deletes a plane with the given id.
+
+        Args:
+            id_plane (str): The id of the plane to delete
+
+        Raises:
+            ValueError: No plane with this id
+        """
         for plane in self.planes : 
             if plane.id == id_plane:
                 self.planes.remove(plane)
@@ -34,13 +56,14 @@ class Plane_handler:
         return self.planes
     
     def get_plane(self, id_plane):
-        for plane in self.planes : 
-            if plane.id == id_plane:
-                return plane
-        print(f"Plane {id_plane} not found")
-        return None
-    
-    def get_plane_from_id(self, id_plane):
+        """this method returns the plane with the given id.
+
+        Args:
+            id_plane (str): id of the plane to return
+
+        Returns:
+            plane : return none or the plane according the given id
+        """
         for plane in self.planes : 
             if plane.id == id_plane:
                 return plane

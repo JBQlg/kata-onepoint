@@ -25,7 +25,6 @@ def reverse_coordinates_converter(col, row):
         raise ValueError("The row and column numbers must be positive.")
     lettre = chr(col + ord('A'))  
     seat_number = str(row + 1)  
-    print(lettre + seat_number)
     return lettre + seat_number
 
 def is_passport_number_valid(passport_number):

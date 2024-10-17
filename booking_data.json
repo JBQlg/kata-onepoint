@@ -93,7 +93,7 @@
             "plane_id": "P2",
             "reservations": [
                 {
-                    "id": "RES5",
+                    "id": "RES3",
                     "flight_id": "FL2",
                     "passengers": [
                         {
@@ -123,7 +123,7 @@
                             "is_booked": true
                         }
                     ],
-                    "statut": "CONFIRMED"
+                    "statut": "PENDING"
                 }
             ]
         },
@@ -136,7 +136,7 @@
             "plane_id": "P2",
             "reservations": [
                 {
-                    "id": "RES3",
+                    "id": "RES4",
                     "flight_id": "FL3",
                     "passengers": [
                         {
@@ -179,7 +179,7 @@
             "plane_id": "P3",
             "reservations": [
                 {
-                    "id": "RES4",
+                    "id": "RES5",
                     "flight_id": "FL4",
                     "passengers": [
                         {
@@ -247,15 +247,6 @@
             "date": "2025-04-09",
             "schedule": "10:00",
             "plane_id": "P2",
-            "reservations": []
-        },
-        {
-            "id": "FL9",
-            "departure": "Paris",
-            "arrival": "Rio de janeiro",
-            "date": "2025-09-10",
-            "schedule": "19:00",
-            "plane_id": "P5",
             "reservations": []
         }
     ]

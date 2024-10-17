@@ -22,7 +22,15 @@ class Flight:
         return f"Flight {self.id} : {self.departure} to {self.arrival} ({self.date} - {self.schedule}) on plane {self.plane_id}"
     
     def is_seat_available(self, seat, planes):
-        # Check if the seat is already booked or out of bounds
+        """This method checks if a seat is available for booking.
+
+        Args:
+            seat (seat): The seat to check
+            planes (plane): List of planes to check 
+
+        Returns:
+            boolean : True if the seat is available and correct, False otherwise
+        """
         for p in planes:
             if p.id == self.plane_id:
                 if seat.row > p.row_nb or seat.col > p.col_nb:
@@ -34,8 +42,12 @@ class Flight:
         return True
     
     def display_plane_plan(self, plane_list):
-        """ Fonction d'affichage du plan de l'avion pour la réservation avec les couloirs de déplacement.
-        Elle affiche l'état des sièges (occupé ou libre) et représente les couloirs de déplacement.
+        """ Display the plane plan for booking with the corridors.
+            Display the available seats with a 0 and the booked seats with an X.
+                    
+        Args: plein_list ([plane]): plane list to get the plane from the plane_id
+        
+        return: str: string representing the plane plan
         """
         places_format = "      "  # Préparer la ligne de l'en-tête des colonnes (A, B, C, D, ...)
         

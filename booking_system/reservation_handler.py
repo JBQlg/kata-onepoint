@@ -78,6 +78,12 @@ class Reservation_handler:
     def add_reservation(self, passenger, seat, flight):
         """This method allows to add a reservation to a flight.
         It returns the reservation created.
+        Args:
+            passenger (Passenger): passenger to add to the reservation
+            seat (Seat): seat to book for the passenger
+            flight (Flight): flight to add the reservation
+        Returns:
+            flight: the flight updated with the new reservation
         """
         reservation = Reservation(flight.id, passenger, seat)
         reservation.confirm()
@@ -87,6 +93,7 @@ class Reservation_handler:
     def create_passenger(self):
         """This method allows to create a passenger to add to a reservation.
         It returns the passenger created.
+        return: passenger : the passenger created
         """
         passport_number = self.fill_passport_number()
         firstname = input("Enter the firstname : ")
@@ -102,6 +109,13 @@ class Reservation_handler:
     def build_passenger(self, passport_number, firstname, lastname, age):
         """This method allows to create a passenger to add to a reservation.
         It returns the passenger created.
+        Args:
+            passport_number (str): passport number of the passenger
+            firstname (str): firstname of the passenger
+            lastname (str): lastname of the passenger
+            age (int): age of the passenger
+        Returns:
+            passenger: the passenger created
         """
         passenger = Passenger(passport_number, firstname, lastname, age)
         return passenger
@@ -109,6 +123,13 @@ class Reservation_handler:
     def assign_seat(self, flight, passenger, seat, list_planes):
         """This method allows to assign a seat to a reservation.
         It returns the seat created.
+        Args:
+            flight (Flight): flight where the reservation is made
+            passenger (Passenger): passenger to assign the seat
+            seat (Seat): seat to assign to the passenger
+            list_planes ([Plane]): list of planes used
+        Returns:
+            seat: the seat assigned
         """
         # check if the seat is in the right format
         if len(seat) != 2:
@@ -147,6 +168,11 @@ class Reservation_handler:
             return self.fill_seat(flight, list_planes)
     
     def fill_passport_number(self):
+        """This method allows to fill the passenger passport number.
+
+        Returns:
+            str : passport number
+        """
         passport_number = input("Enter the passport number : ")
         # check if the passenger passport number last 9 characters
         if len(passport_number) != 9:
@@ -155,6 +181,15 @@ class Reservation_handler:
         return passport_number
     
     def get_reservations_by_passport(self,flights_list, passport_number):
+        """This method allows to get a reservation by the passenger's passport number.
+
+        Args:
+            flights_list ([flight]): list of flights
+            passport_number (str): passport number of the passenger
+
+        Returns:
+            reservation : the wanted reservation
+        """
         for flight in flights_list:
             for resa in flight.reservations:
                 for passenger in resa.passengers:
@@ -164,6 +199,15 @@ class Reservation_handler:
         return None
     
     def get_reservation_by_id_resa(self, flights_list, id_reservation):
+        """This method allows to get a reservation by its ID.
+
+        Args:
+            flights_list ([flight]): list of flights
+            id_reservation (str): wanted reservation ID
+
+        Returns:
+            reservation: the wanted reservation
+        """
         for flight in flights_list:
             for resa in flight.reservations:
                 if resa.id == id_reservation:
@@ -357,6 +401,12 @@ class Reservation_handler:
         return resa        
     
     def print_reservation_details(self, flights, id_reservation = ""):
+        """This method allows to print the details of a reservation.
+        Args:
+            flights (flight): list of flights
+            id_reservation (str, optional): The reservation ID to print. 
+                    Defaults to "".
+        """
         print("Print reservation details")
         if id_reservation == "":
             id_reservation = input("Enter the reservation id : ")

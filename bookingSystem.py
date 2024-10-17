@@ -31,9 +31,11 @@ class BookingSystem:
         print("6. Créer un avion")
         print("7. Créer un vol")
         print("8. Affichage des avions enregistrés")
+        print("9. Supprimer un avion")
+        print("10. Supprimer un vol")
         choix = input("Veuillez entrer votre choix : ")
         #check if the choice is valid
-        while choix not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
+        while choix not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             print("Choix invalide")
             choix = input("Veuillez entrer votre choix : ")
         return choix
@@ -77,6 +79,10 @@ class BookingSystem:
                 self.flight_handler.create_flight(plane_id=plane.id, departure=input("Départ : "), destination=input("Destination : "), schedule=input("Horaire : "), date=input("Date : "), reservations=[])
             elif choix == "8":
                 print(self.plane_handler)
+            elif choix == "9":
+                self.plane_handler.delete_plane(input("ID de l'avion à supprimer : "))
+            elif choix == "10":
+                self.flight_handler.delete_flight(input("ID du vol à supprimer : "))
             else:
                 print("Choix invalide")
 
@@ -163,7 +169,12 @@ class BookingSystem:
             self.plane_handler.create_plane(args.model, args.rows, args.columns)
             print(f"Avion ajouté : Modèle {args.model}, {args.rows} rangées, {args.columns} colonnes.")
             command_executed = True
-
+            
+        elif args.command == "delete-plane":
+            self.plane_handler.delete_plane(args.plane_id)
+            print(f"Avion avec ID {args.plane_id} supprimé.")
+            command_executed = True
+            
         elif args.command == "add-flight":
             # check if the plane exists
             plane = self.plane_handler.get_plane(args.plane_id) 
@@ -174,6 +185,11 @@ class BookingSystem:
             else:
                 print(f"L'avion avec ID {args.plane_id} n'a pas été trouvé.")
                 
+        elif args.command == "delete-flight":
+            self.flight_handler.delete_flight(args.flight_id)
+            print(f"Vol avec ID {args.flight_id} supprimé.")
+            command_executed = True
+            
         elif args.command == "help":
             self.show_help()
             command_executed = True
@@ -196,7 +212,9 @@ class BookingSystem:
         print("                        - 3 = annuler la réservation")
         print("  details             : Voir les détails d'une réservation.")
         print("  add-plane           : Ajouter un nouvel avion. Utiliser avec les arguments suivants : modèle, rangées, colonnes.")
+        print("  delete-plane        : Supprimer un avion. Utiliser avec l'argument suivant : plane_id.")
         print("  add-flight          : Ajouter un nouveau vol. Utiliser avec les arguments suivants : plane_id, départ, destination, horaire, date.")
+        print("  delete-flight       : Supprimer un vol. Utiliser avec l'argument suivant : flight_id.")
         print("  help                : Afficher cette aide.")
 
 
@@ -220,6 +238,9 @@ def main():
     add_plane_parser.add_argument("model", type=str, help="The model of the plane")
     add_plane_parser.add_argument("rows", type=int, help="The number of rows in the plane")
     add_plane_parser.add_argument("columns", type=int, help="The number of columns in the plane")
+    # delete plane
+    delete_plane_parser = subparsers.add_parser("delete-plane", help="Delete a plane")
+    delete_plane_parser.add_argument("plane_id", type=str, help="The ID of the plane to delete")
     #new flight
     add_flight_parser = subparsers.add_parser("add-flight", help="Add a new flight")
     add_flight_parser.add_argument("plane_id", type=str, help="The ID of the plane for this flight")
@@ -227,6 +248,9 @@ def main():
     add_flight_parser.add_argument("destination", type=str, help="The destination city")
     add_flight_parser.add_argument("schedule", type=str, help="The time of departure")
     add_flight_parser.add_argument("date", type=str, help="The date of the flight (format YYYY-MM-DD)")
+    # delete flight
+    delete_flight_parser = subparsers.add_parser("delete-flight", help="Delete a flight")
+    delete_flight_parser.add_argument("flight_id", type=str, help="The ID of the flight to delete")
     # list planes
     subparsers.add_parser("list-planes", help="List all available planes")
     # help 
@@ -249,5 +273,5 @@ if __name__ == "__main__":
     # # lancement du menu principal
     # booking.main_menu_handler()
     
-    # print("Au revoir !")
+    print("Au revoir !")
     

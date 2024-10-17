@@ -32,6 +32,7 @@ class Reservation:
         print(f"Reservation {self.id} confirmed")
         
     def cancel(self) :
+        """This method will cancel the reservation and set the status to CANCELLED"""
         for seat in self.seats:
             seat.is_booked = False
         self.statut = "CANCELLED"
