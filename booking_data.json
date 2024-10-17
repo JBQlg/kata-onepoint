@@ -23,6 +23,12 @@
             "model": "Boeing 787",
             "row_nb": 7,
             "col_nb": 6
+        },
+        {
+            "id": "P5",
+            "model": "A320Neo",
+            "row_nb": 12,
+            "col_nb": 6
         }
     ],
     "flights": [
@@ -103,7 +109,7 @@
                             "passport_number": "123123123",
                             "firstname": "antoine",
                             "lastname": "dupont",
-                            "age": "12"
+                            "age": "20"
                         },
                         {
                             "passport_number": "121212122",

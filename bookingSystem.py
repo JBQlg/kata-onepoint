@@ -159,13 +159,12 @@ class BookingSystem:
             self.reservation_handler.print_reservation_details(self.flight_handler.flights, args.reservation_id)
             command_executed = True
             
-        elif args.command == "add_plane":
+        elif args.command == "add-plane":
             self.plane_handler.create_plane(args.model, args.rows, args.columns)
             print(f"Avion ajouté : Modèle {args.model}, {args.rows} rangées, {args.columns} colonnes.")
             command_executed = True
-            self.save.data()
-            return
-        elif args.command == "add_flight":
+
+        elif args.command == "add-flight":
             # check if the plane exists
             plane = self.plane_handler.get_plane(args.plane_id) 
             if plane:
@@ -175,10 +174,9 @@ class BookingSystem:
             else:
                 print(f"L'avion avec ID {args.plane_id} n'a pas été trouvé.")
                 
-        elif args.command == "quit":
-            self.save_data()
-            print("Données sauvegardées. Système quitté.")
-            return
+        elif args.command == "help":
+            self.show_help()
+            command_executed = True
         else:
             self.main_menu_handler()
 
@@ -199,7 +197,6 @@ class BookingSystem:
         print("  details             : Voir les détails d'une réservation.")
         print("  add-plane           : Ajouter un nouvel avion. Utiliser avec les arguments suivants : modèle, rangées, colonnes.")
         print("  add-flight          : Ajouter un nouveau vol. Utiliser avec les arguments suivants : plane_id, départ, destination, horaire, date.")
-        print("  quit                : Sauvegarder les données et quitter le système.")
         print("  help                : Afficher cette aide.")
 
 
@@ -217,7 +214,7 @@ def main():
     modify_parser.add_argument("subcommand", choices=["1", "2", "3"], help="What to modify: 1 = passenger, 2 = seat, 3 = cancel reservation")
     details_parser = subparsers.add_parser("details", help="View reservation details")
     details_parser.add_argument("reservation_id", type=str, help="The ID of the reservation to view")
-    subparsers.add_parser("quit", help="Save data and quit the system")
+    # subparsers.add_parser("quit", help="Save data and quit the system")
     #new plane
     add_plane_parser = subparsers.add_parser("add-plane", help="Add a new plane")
     add_plane_parser.add_argument("model", type=str, help="The model of the plane")
