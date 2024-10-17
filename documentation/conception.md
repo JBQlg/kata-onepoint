@@ -17,11 +17,11 @@ Pour cela un premier, un premier UML de conception est réalisé.
 ### Notes sur les différentes étapes suivantes possibles 
 
 * Test unitaires avancées
-* Ajout de la persistances des données via JSON 
-* Ajout d'une Intégration continue (CI - GitHub Actions)
-* Ajout d'une gestion avancées des vols
-* Ajout de la persistance des données via une base de données SQL
+* Ajout de la persistances des données via JSON //
+* Ajout d'une Intégration continue (CI - GitHub Actions)//
+* Ajout d'une gestion avancées des vols //
+* Ajout de la persistance des données via une base de données SQL 
 * Ajout d'une interface graphique (GUI) pour l'application
-* Ajout d'une gestion des utilisateurs
+* Ajout d'une gestion des utilisateurs 
 * Ajout d'un déploiement de l'application sur un serveur web avec déploiement continu (CD)
 
