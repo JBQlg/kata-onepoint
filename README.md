@@ -14,9 +14,9 @@ Le code devra permettre :
 
 ### Fonctionnement du code
 
-Le developement de ce code à partir de ce cahier des charges a été fait avec pour commencer une approche de base fonctionnant avec des menus contextuels.
+Le developement de ce code à partir de ce cahier des charges a été fait avec une première approche fonctionnant avec des menus contextuels.
 Ensuite, une approche avec des commandes directes a été ajoutée pour permettre une utilisation plus fluide du code.
-Enfin, une persistance des données a été ajoutée pour permettre de sauvegarder les données des vols et des passagers.
+Enfin, une persistance des données a été programmée pour permettre de sauvegarder les données des vols et des passagers.
 
 
 #### Approches de fonctionnement
@@ -39,13 +39,13 @@ Enfin, une persistance des données a été ajoutée pour permettre de sauvegard
   
     ![Détail des commandes](/documentation/diagram/direct_cmd_help.png)
 
-#### Persistance des données 
-* Persistance des données via JSON
+#### Persistence des données 
+* Persistence des données via JSON
   
   Bien qu'une fonction ai été ajoutée pour simuler des exemples d'éléments de ce simulateur (avions, vols, réservations, ...), les données saisies sont sauvegardées automatiquement dans un fichier JSON.
 
   ![Exemple de données sauvegardées](/documentation/diagram/json_data_example.png)
 
-  
+  (Une persistence des données en base de données pourrait être envisagée pour une utilisation plus poussée de ce code, l'architecture actuelle permettant de facilement ajouter cette fonctionnalité)
 ---
 Dans la section  `documentation` vous trouverez les premiers diagrammes UML de conceptions permettant d'imaginer l'évolution de ce programme pendant ce kata (tous n'y sont pas forcément (notament les derniers mais si intéressé, je peux les fournir).
