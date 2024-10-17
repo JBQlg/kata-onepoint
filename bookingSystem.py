@@ -1,6 +1,7 @@
 from booking_system.flight_handler import Flight_handler
 from booking_system.plane_handler import Plane_handler
 from booking_system.reservation_handler import Reservation_handler  
+import json 
 
 class BookingSystem: 
     """This class is the main class of the booking system. 
@@ -8,11 +9,13 @@ class BookingSystem:
     Each handler will handle the different actions of the system.
     This class make the interactions with the user and make the link between the different handlers.
     """
+    DATA_FILE = "booking_data.json"
     def __init__(self):
         # create the different handlers
         self.flight_handler = Flight_handler()
         self.plane_handler = Plane_handler()
         self.reservation_handler = Reservation_handler()
+        # self.load_data()
     
     def display_menu(self):
         # display the main menu and return the choice of the user
@@ -57,6 +60,7 @@ class BookingSystem:
             elif choix == "4":
                 self.reservation_handler.print_reservation_details(self.flight_handler.flights)
             elif choix == "5":
+                # self.save_data()
                 break
             else:
                 print("Choix invalide")
@@ -84,6 +88,37 @@ class BookingSystem:
         # flight = self.reservation_handler.assign_seat(flight=self.flight_handler.flights[0], passenger=passenger1, seat="C5", list_planes=self.plane_handler.planes)    
         # flight = self.reservation_handler.assign_seat(flight=self.flight_handler.flights[0], passenger=passenger2, seat="D5", list_planes=self.plane_handler.planes)    
             
+    # def save_data(self):
+    #     """Save all the system data into a JSON file."""
+    #     data = {
+    #         "planes": [plane.to_dict() for plane in self.plane_handler.planes],
+    #         "flights": [flight.to_dict() for flight in self.flight_handler.flights],
+    #         "reservations": self.reservation_handler.to_dict()
+    #     }
+    #     with open(self.DATA_FILE, 'w') as f:
+    #         json.dump(data, f, indent=4)
+    #     print("Données sauvegardées avec succès.")
+    
+    # def load_data(self):
+    #     """Load system data from the JSON file."""
+    #     try:
+    #         with open(self.DATA_FILE, 'r') as f:
+    #             data = json.load(f)
+                
+    #         # Recharger les avions
+    #         for plane_data in data["planes"]:
+    #             self.plane_handler.planes.append(Plane_handler.from_dict(plane_data))
+            
+    #         # Recharger les vols
+    #         for flight_data in data["flights"]:
+    #             self.flight_handler.flights.append(Flight_handler.from_dict(flight_data))
+            
+    #         # Recharger les réservations
+    #         self.reservation_handler.from_dict(data["reservations"])
+            
+    #         print("Données chargées avec succès.")
+    #     except FileNotFoundError:
+    #         print("Fichier de données non trouvé. Début avec un nouveau système.")
     
     
 if __name__ == "__main__":
@@ -91,7 +126,7 @@ if __name__ == "__main__":
     
     # simulation des items pour tester le système
     print("Simulation des items : " )
-    booking.items_simulation()
+    #booking.items_simulation()
 
     # lancement du menu principal
     booking.main_menu_handler()

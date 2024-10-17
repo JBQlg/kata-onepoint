@@ -5,11 +5,10 @@ from booking_system.plane_handler import Plane_handler
 class TestPlaneHandler(unittest.TestCase):
     
     def setUp(self):
-        """Set up a PlaneHandler instance before each test."""
         self.plane_handler = Plane_handler()
     
     def test_create_plane(self):
-        """Test the creation of a plane."""
+        """Test the creation of a plane and check the planes list"""
         plane = self.plane_handler.create_plane(model="Boeing 747", row_nb=10, col_nb=6)
         self.assertEqual(len(self.plane_handler.planes), 1)
         self.assertEqual(self.plane_handler.planes[0].model, "Boeing 747")
@@ -17,7 +16,7 @@ class TestPlaneHandler(unittest.TestCase):
         self.assertEqual(self.plane_handler.planes[0].col_nb, 6)
     
     def test_get_planes(self):
-        """Test the retrieval of all planes."""
+        """Test the retrieval of planes."""
         plane1 = self.plane_handler.create_plane(model="Boeing 747", row_nb=10, col_nb=6)
         plane2 = self.plane_handler.create_plane(model="Airbus A320", row_nb=8, col_nb=4)
         planes = self.plane_handler.get_planes()
@@ -30,7 +29,6 @@ class TestPlaneHandler(unittest.TestCase):
         plane = self.plane_handler.create_plane(model="Boeing 747", row_nb=10, col_nb=6)
         found_plane = self.plane_handler.get_plane(plane.id)
         self.assertEqual(found_plane, plane)
-        
         # Test for non-existing plane
         self.assertIsNone(self.plane_handler.get_plane("INVALID_ID"))
 

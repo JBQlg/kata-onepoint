@@ -367,3 +367,15 @@ class Reservation_handler:
         print(f"Reservation {id_reservation} not found")
         return None
     
+    # def to_dict(self):
+    #     """Convert the Reservation_handler's data to a dictionary for JSON serialization."""
+    #     return {
+    #         "reservations": [reservation.to_dict() for reservation in self.reservations]
+    #     }
+
+    # @classmethod
+    # def from_dict(cls, data):
+    #     """Recreate Reservation_handler's data from a dictionary."""
+    #     handler = cls()
+    #     handler.reservations = [Reservation.from_dict(r) for r in data["reservations"]]
+    #     return handler

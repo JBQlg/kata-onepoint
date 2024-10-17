@@ -1,5 +1,7 @@
 
 import booking_system.utils as ut
+from booking_system.passenger import Passenger
+from booking_system.seat import Seat
 
 class Reservation:
     _id_counter = 1
@@ -32,4 +34,27 @@ class Reservation:
             seat.is_booked = False
         self.statut = "CANCELLED"
         print(f"Reservation {self.id} cancelled !")
+
+    # def to_dict(self):
+    #     """Convert the Reservation object to a dictionary for JSON serialization."""
+    #     return {
+    #         "id": self.id,
+    #         "flight_id": self.flight_id,
+    #         "passengers": [passenger.to_dict() for passenger in self.passengers],  # Ensure Passenger has to_dict method
+    #         "seats": [seat.to_dict() for seat in self.seats],  # Ensure Seat has to_dict method
+    #         "statut": self.statut
+    #     }
     
+    # @classmethod
+    # def from_dict(cls, data):
+    #     """Create a Reservation object from a dictionary (JSON deserialization)."""
+    #     passengers = [Passenger.from_dict(p) for p in data["passengers"]]  # Assuming Passenger has from_dict
+    #     seats = [Seat.from_dict(s) for s in data["seats"]]  # Assuming Seat has from_dict
+    #     reservation = cls(
+    #         flight_id=data["flight_id"],
+    #         passengers=passengers,
+    #         seats=seats,
+    #         id=data["id"]
+    #     )
+    #     reservation.statut = data["statut"]
+    #     return reservation

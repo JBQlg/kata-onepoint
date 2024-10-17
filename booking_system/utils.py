@@ -24,6 +24,10 @@ def reverse_coordinates_converter(col, row):
     seat_number = str(row + 1)  # Convert row number back to 1-indexed seat number
     return lettre + seat_number
 
+# def reverse_coordinates_converter(col, row):
+#     """Convertit les coordonnées (colonne, rangée) en format lettre-colonne et numéro-rangée (ex : 'C3')"""
+#     return f"{chr(65 + col)}{row + 1}"
+
 
 def is_passport_number_valid(passport_number):
     """This function checks if the passport number is valid.

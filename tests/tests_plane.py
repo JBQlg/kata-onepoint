@@ -4,7 +4,7 @@ from booking_system.plane import Plane
 class TestPlane(unittest.TestCase):
     
     def setUp(self):
-        """This method is called before each test to set up a Plane instance."""
+        Plane._id_counter = 1 # reset the counter
         self.plane = Plane(model="Boeing 747", row_nb=10, col_nb=6)
     
     def test_initialization(self):
@@ -19,8 +19,10 @@ class TestPlane(unittest.TestCase):
         plane2 = Plane(model="Airbus A320", row_nb=8, col_nb=4)
         self.assertNotEqual(self.plane.id, plane2.id)
         self.assertTrue(plane2.id.startswith("P"))
+        self.assertEqual(plane2.id, "P2")
     
-    def test_str_representation(self):
-        """Test the string representation of the Plane."""
+    def test_str(self):
+        """Test the string function of the Plane."""
+        print("Plane 1 ID : ", self.plane.id)
         self.assertEqual(str(self.plane), "Plane P1 : Boeing 747 (10 x 6)")
 

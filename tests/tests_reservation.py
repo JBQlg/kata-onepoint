@@ -6,7 +6,7 @@ from booking_system.seat import Seat
 class TestReservation(unittest.TestCase):
     
     def setUp(self):
-        """Set up instances for testing Reservation."""
+        Reservation._id_counter = 1 # reset the counter
         self.passenger1 = Passenger(passport_number="A12345678", firstname="John", lastname="Doe", age=30)
         self.passenger2 = Passenger(passport_number="A87654321", firstname="Jane", lastname="Doe", age=28)
         
@@ -20,15 +20,16 @@ class TestReservation(unittest.TestCase):
         )
     
     def test_initialization(self):
-        """Test if the Reservation is initialized correctly."""
+        """Test if the Reservation is initialized correctly.
+        """
         self.assertEqual(self.reservation.flight_id, "FL123")
         self.assertEqual(len(self.reservation.passengers), 2)
         self.assertEqual(len(self.reservation.seats), 2)
         self.assertEqual(self.reservation.statut, "PENDING")
         self.assertTrue(self.reservation.id.startswith("RES"))
     
-    def test_str_representation(self):
-        """Test the string representation of the Reservation."""
+    def test_str(self):
+        """Test the string funtion."""
         expected_str = (
             f"Reservation {self.reservation.id} pour le vol FL123 :\n"
             f"Passager: {self.passenger1} - Siège: {self.seat1} - Statut: PENDING\n"
