@@ -6,7 +6,7 @@ from booking_system.seat import Seat
 class Reservation:
     _id_counter = 1
     
-    def __init__(self, flight_id, passengers, seats) :
+    def __init__(self, flight_id, passengers, seats, statut="PENDING"):
         if len(passengers) != len(seats):
             raise ValueError("The number of passengers and seats must be the same and not null")
         self.id = "RES"  + str(Reservation._id_counter)
@@ -14,7 +14,7 @@ class Reservation:
         self.flight_id = flight_id # allow to find the instance of the flight in the flight
         self.passengers = passengers #list of passenger's instance
         self.seats = seats # instance of the seat for the reservation
-        self.statut = "PENDING"
+        self.statut = statut
     
     def __str__(self) :
         # return the reservation in a string format, with all the information about the reservation including for each passengers
@@ -56,5 +56,6 @@ class Reservation:
         return cls(
             flight_id=data["flight_id"],
             passengers=passengers,
+            statut=data.get("statut", "PENDING"),  
             seats=seats
         )

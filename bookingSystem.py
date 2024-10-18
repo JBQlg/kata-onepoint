@@ -33,6 +33,7 @@ class BookingSystem:
         print("8. Affichage des avions enregistrés")
         print("9. Supprimer un avion")
         print("10. Supprimer un vol")
+        print("-------------------------\n\n")
         choix = input("Veuillez entrer votre choix : ")
         #check if the choice is valid
         while choix not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:

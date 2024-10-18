@@ -1,6 +1,8 @@
 
 # Projet de simulation de réservation de vols - KATA Onepoint
 
+### Description du kata
+
 Un code permettant de simuler un système de réservation de vol avec attribution des places dans un avion. 
 
 Le code devra permettre : 
@@ -26,9 +28,14 @@ Enfin, une persistance des données a été programmée pour permettre de sauveg
 
   ![Menu principal](/documentation/diagram/screen_main_menu.png)
 
+  * Exemple d'attribution de siège :
+
+  ![Attribution de siège](/documentation/diagram/ex_assign_seat.png)
+
+
 * Approche avec commande directe 
   
-  La seconde approche vient en réalité se greffer aux méthodes de la première. Elle a pour objectif de permettre une utilisation plus fluide du code en permettant de réaliser des actions concrètes sans passer par les menus contextuels.
+  La seconde approche vient en réalité se greffer aux méthodes de la première. Elle a pour objectif de permettre une utilisation plus fluide du code en perm  ettant de réaliser des actions concrètes sans passer par les menus contextuels.
   Elle permet donc un gain de temps pour la plupart des actions (exceptées celles de création d'une réservation nécessitant une plus grande quantité d'informations et l'affichage entre étapes intermédiaire du plan de l'appareil). Cela permet également de faciliter des implémentations avec d'autres systèmes de gestion ultérieur.
 
     * Exemple d'ajout d'un vol : 
@@ -39,6 +46,10 @@ Enfin, une persistance des données a été programmée pour permettre de sauveg
   
     ![Détail des commandes](/documentation/diagram/direct_cmd_help.png)
 
+  Ainsi via ces approches nous pouvons réaliser la gestio des différents vols, avions et passagers en comprenant l'attribution des sièges et la modification de ces derniers.
+  Enfin l'affichage des détails des réservations est également possible.
+
+
 #### Persistence des données 
 * Persistence des données via JSON
   
@@ -46,6 +57,9 @@ Enfin, une persistance des données a été programmée pour permettre de sauveg
 
   ![Exemple de données sauvegardées](/documentation/diagram/json_data_example.png)
 
-  (Une persistence des données en base de données pourrait être envisagée pour une utilisation plus poussée de ce code, l'architecture actuelle permettant de facilement ajouter cette fonctionnalité)
+
+
 ---
-Dans la section  `documentation` vous trouverez les premiers diagrammes UML de conceptions permettant d'imaginer l'évolution de ce programme pendant ce kata (tous n'y sont pas forcément (notament les derniers mais si intéressé, je peux les fournir).
+
+
+Dans la section  `documentation` vous trouverez les premiers diagrammes UML de conceptions permettant d'imaginer l'évolution de ce programme pendant ce kata (tous n'y sont pas forcément, notament les dernières versions mais si intéressé contactez le développeur).

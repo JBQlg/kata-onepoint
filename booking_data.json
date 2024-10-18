@@ -83,7 +83,7 @@
                     "statut": "PENDING"
                 },
                 {
-                    "id": "RES6",
+                    "id": "RES3",
                     "flight_id": "FL1",
                     "passengers": [
                         {
@@ -101,7 +101,49 @@
                             "is_booked": false
                         }
                     ],
+                    "statut": "PENDING"
+                },
+                {
+                    "id": "RES4",
+                    "flight_id": "FL1",
+                    "passengers": [
+                        {
+                            "passport_number": "123123123",
+                            "firstname": "John",
+                            "lastname": "Doe",
+                            "age": "24"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 9,
+                            "col": 5,
+                            "category": "ECONOMY",
+                            "is_booked": true
+                        }
+                    ],
                     "statut": "CANCELLED"
+                },
+                {
+                    "id": "RES5",
+                    "flight_id": "FL1",
+                    "passengers": [
+                        {
+                            "passport_number": "123AZEQSD",
+                            "firstname": "test",
+                            "lastname": "test",
+                            "age": "1"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 0,
+                            "col": 5,
+                            "category": "ECONOMY",
+                            "is_booked": true
+                        }
+                    ],
+                    "statut": "CONFIRMED"
                 }
             ]
         },
@@ -114,7 +156,7 @@
             "plane_id": "P2",
             "reservations": [
                 {
-                    "id": "RES3",
+                    "id": "RES6",
                     "flight_id": "FL2",
                     "passengers": [
                         {
@@ -144,7 +186,28 @@
                             "is_booked": true
                         }
                     ],
-                    "statut": "PENDING"
+                    "statut": "CONFIRMED"
+                },
+                {
+                    "id": "RES7",
+                    "flight_id": "FL2",
+                    "passengers": [
+                        {
+                            "passport_number": "AZE345678",
+                            "firstname": "Marc",
+                            "lastname": "Doe",
+                            "age": "45"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 3,
+                            "col": 2,
+                            "category": "ECONOMY",
+                            "is_booked": true
+                        }
+                    ],
+                    "statut": "CONFIRMED"
                 }
             ]
         },
@@ -157,7 +220,7 @@
             "plane_id": "P2",
             "reservations": [
                 {
-                    "id": "RES4",
+                    "id": "RES8",
                     "flight_id": "FL3",
                     "passengers": [
                         {
@@ -200,7 +263,7 @@
             "plane_id": "P3",
             "reservations": [
                 {
-                    "id": "RES5",
+                    "id": "RES9",
                     "flight_id": "FL4",
                     "passengers": [
                         {
@@ -241,7 +304,29 @@
             "date": "2025-07-04",
             "schedule": "10:00",
             "plane_id": "P4",
-            "reservations": []
+            "reservations": [
+                {
+                    "id": "RES10",
+                    "flight_id": "FL5",
+                    "passengers": [
+                        {
+                            "passport_number": "AZ123AZ12",
+                            "firstname": "david",
+                            "lastname": "beaudoin",
+                            "age": "21"
+                        }
+                    ],
+                    "seats": [
+                        {
+                            "row": 3,
+                            "col": 1,
+                            "category": "ECONOMY",
+                            "is_booked": true
+                        }
+                    ],
+                    "statut": "PENDING"
+                }
+            ]
         },
         {
             "id": "FL6",
